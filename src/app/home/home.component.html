@@ -1,0 +1,35 @@
+<div class="flex justify-end items-center">
+  <button (click)="login()" class="text-white bg-blue-600 rounded-lg px-4 py-2">login</button>
+</div>
+
+<!-- product-list.component.html -->
+<div *ngIf="products.length > 0; else noProducts" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-6">
+    <div *ngFor="let product of products" class="bg-white shadow-md rounded-lg overflow-hidden border mx-auto transition-all duration-300 hover:shadow-xl">
+      <!-- Image Section -->
+      <div class="w-48 h-52 bg-white flex justify-center items-center">
+        <img *ngIf="product.byteImage" [src]="'data:image/jpeg;base64,' + product.byteImage" alt="{{ product.name }}"
+          class="w-auto h-52 object-cover" />
+        <div *ngIf="!product.byteImage" class="w-48 h-32 bg-gray-300 flex items-center justify-center text-gray-500">
+          <span>No Image</span>
+        </div>
+      </div>
+  
+      <!-- Card Body -->
+      <div class="p-4 space-y-2">
+        <h3 class="text-lg font-semibold text-gray-800">{{ product.name }}</h3>
+        <p class="text-xl font-semibold text-gray-900">Tsh &nbsp; {{ product.price}}/=</p>
+      </div>
+  
+      <!-- Card Footer -->
+      <div class="p-4 border-t">
+        <button class="bg-blue-500 text-white py-2 px-4 rounded-2xl w-auto hover:bg-blue-600 transition duration-200">
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #noProducts>
+    <p class="text-center text-lg text-gray-500">No products available.</p>
+  </ng-template>
+  

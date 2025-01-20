@@ -1,0 +1,20 @@
+<div class="h-screen w-full bg-white">
+    <div class="flex justify-between">
+      <!-- Left container for menu items -->
+      <div 
+        class="bg-gray-600 h-screen transition-all duration-300"
+        [ngClass]="{ 'w-[14%] md:w-[8%] lg:w-[12%] xl:w-[16%]': isSidebarOpen, 'w-0': !isSidebarOpen }"
+      >
+        <app-menu *ngIf="isSidebarOpen" />
+      </div>
+  
+      <!-- Right container -->
+      <div 
+        class="bg-blue-200 transition-all duration-300"
+        [ngClass]="{ 'w-[86%] md:w-[92%] lg:w-[88%] xl:w-[84%]': isSidebarOpen, 'w-full': !isSidebarOpen }"
+      >
+        <app-navbar (toggleSidebar)="toggleSidebar()" />
+      </div>
+    </div>
+  </div>
+  

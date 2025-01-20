@@ -1,0 +1,103 @@
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+    <div class="w-full max-w-md bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-2xl font-bold text-blue-600 text-center mb-6">Sign Up</h2>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <!-- Full Name Field -->
+        <div class="mb-5">
+          <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">
+            Full Name
+          </label>
+          <input
+            id="fullName"
+            type="text"
+            formControlName="fullName"
+            placeholder="Enter your full name"
+            class="w-full border border-gray-400 rounded-lg px-3 py-2 focus:outline-none focus:ring-1 focus:ring-gray-600"
+            [class.border-red-500]="isControlInvalid('fullName')"
+          />
+          <small
+            *ngIf="isControlInvalid('fullName')"
+            class="text-red-500 text-sm"
+          >
+            Full Name is required and must be at least 3 characters.
+          </small>
+        </div>
+  
+        <!-- Email Field -->
+        <div class="mb-5">
+          <label for="email" class="block text-sm font-medium text-gray-700 mb-1">
+            Email
+          </label>
+          <input
+            id="email"
+            type="email"
+            formControlName="email"
+            placeholder="Enter your email"
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-1 focus:ring-gray-600"
+            [class.border-red-500]="isControlInvalid('email')"
+          />
+          <small
+            *ngIf="isControlInvalid('email')"
+            class="text-red-500 text-sm"
+          >
+            Valid email is required.
+          </small>
+        </div>
+  
+        <!-- Password Field -->
+        <div class="mb-5">
+          <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
+            Password
+          </label>
+          <input
+            id="password"
+            type="password"
+            formControlName="password"
+            placeholder="Enter your password"
+            class="w-full border border-gray-400 rounded-lg px-3 py-2  focus:outline-none focus:ring-1 focus:ring-gray-600"
+            [class.border-red-500]="isControlInvalid('password')"
+          />
+          <small
+            *ngIf="isControlInvalid('password')"
+            class="text-red-500 text-sm"
+          >
+            Password must be at least 6 characters.
+          </small>
+        </div>
+  
+        <!-- Phone Field -->
+        <div class="mb-6">
+          <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">
+            Phone
+          </label>
+          <input
+            id="phone"
+            type="tel"
+            formControlName="phone"
+            placeholder="Enter your phone number"
+            class="w-full border border-gray-400 rounded-lg px-3 py-2  focus:outline-none focus:ring-1 focus:ring-gray-600"
+            [class.border-red-500]="isControlInvalid('phone')"
+          />
+          <small
+            *ngIf="isControlInvalid('phone')"
+            class="text-red-500 text-sm"
+          >
+            Phone number must be 10 digits.
+          </small>
+        </div>
+
+        <div  class="flex justify-end items-center mb-4">
+          <p (click)="goToSignIn()" class="text-blue-500 cursor-pointer text-sm">Already have Account? &nbsp;&nbsp; Sign in</p>
+        </div>
+  
+        <button
+          type="submit"
+          [disabled]="registerForm.invalid"
+          class="w-full bg-blue-600 text-white font-medium py-2 px-4 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 disabled:opacity-80"
+        >
+          Register
+        </button>
+      </form>
+    </div>
+  </div>
+  
