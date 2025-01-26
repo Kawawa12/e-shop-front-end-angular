@@ -14,6 +14,7 @@ export interface SignIn {
 
  
 export interface Product {
+description: any;
     id: number;
     name: string;
     categoryId: number;
@@ -21,4 +22,9 @@ export interface Product {
     byteImage: string | null;
     catName: string;
   }
+
+export interface Category{
+   id:number,
+   categoryName:string
+}
   

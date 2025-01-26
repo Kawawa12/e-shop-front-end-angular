@@ -1,19 +1,33 @@
 import { Component } from '@angular/core';
-import { MenuComponent } from "../menu/menu.component";
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from "../navbar/navbar.component";
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-layout',
-  standalone:true,
+  standalone: true,
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css'],
-  imports: [MenuComponent, CommonModule, NavbarComponent]
+  imports: [CommonModule, RouterLink,RouterOutlet],
 })
 export class LayoutComponent {
-  isSidebarOpen = true;
+ 
+  isSidebarOpen = false;
+
+  constructor(private authService:AuthService) {
+     
+  }
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  closeSidebar() {
+    this.isSidebarOpen = false;
+  }
+
+  logout() {
+    this.authService.logoutToHome();
+    console.log('You logged out.');
   }
 }

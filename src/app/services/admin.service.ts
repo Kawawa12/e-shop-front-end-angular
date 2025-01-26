@@ -1,11 +1,18 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Category, Product } from '../model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
+  deleteCategory(categoryId: number) {
+     
+  }
+  updateCategory(updatedCategory: { catName: string; id: number; }) {
+   
+  }
 
   private BASE_URL = 'http://localhost:8080/auth/api';
 
@@ -17,16 +24,17 @@ export class AdminService {
     return this.http.get<any>(url, { params });
   }
 
-  addCategory(name: string): Observable<any> {
+  addCategory(category: { categoryName: string }): Observable<any> {
     const url = `${this.BASE_URL}/add-category`;
-    const params = new HttpParams().set('name', name);
-  
+    const params = new HttpParams().set('name', category.categoryName); // Use the 'categoryName' from the category object
+    
     return this.http.post(url, null, { params });
   }
+  
 
-  getCategories():Observable<any>{
+  getCategories():Observable<Category[]>{
     const url = `${this.BASE_URL}/categories`;
-    return this.http.get(url);
+    return this.http.get<Category[]>(url);
   }
 
   addProduct(productData: FormData): Observable<any> {
@@ -40,9 +48,9 @@ export class AdminService {
   }
   
 
-  getProducts(): Observable<any> {
+  getProducts(): Observable<Product[]> {
     const url = `${this.BASE_URL}/products`;   
-    return this.http.get<any>(url);
+    return this.http.get<Product[]>(url);
   }
   
   

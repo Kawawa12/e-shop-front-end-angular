@@ -1,80 +1,97 @@
-<div class="flex justify-center items-center min-h-screen bg-gray-100">
-    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 w-full max-w-lg">
-      <h1 class="text-2xl font-bold text-gray-700 mb-4">Add Product</h1>
-  
-      <form [formGroup]="productForm" (ngSubmit)="addProduct()" class="space-y-4">
-        <!-- Category Selection -->
-        <div>
-          <label for="categoryId" class="block text-gray-700 font-medium mb-1">Category</label>
+<div class="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-50 to-purple-50 py-8">
+  <div class="bg-white shadow-2xl rounded-2xl px-8 pt-8 pb-8 w-full max-w-2xl mx-4 transform transition-transform duration-300 hover:scale-105">
+    <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">
+      Add Product
+    </h1>
+
+    <form [formGroup]="productForm" (ngSubmit)="addProduct()" class="space-y-6">
+      <!-- Category Selection -->
+      <div class="flex gap-4">
+        <div class="w-2/3">
+          <label for="categoryId" class="block text-gray-700 font-medium mb-2">Select Category</label>
           <select
             id="categoryId"
             formControlName="categoryId"
-            class="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
           >
-            <option value="" disabled selected>Select a category</option>
+            <option value="" disabled>Select a category</option>
             <option *ngFor="let category of listOfCategories" [value]="category.categoryId">
               {{ category.categoryName }}
             </option>
           </select>
-          <div *ngIf="productForm.controls['categoryId'].invalid && productForm.controls['categoryId'].dirty"
-            class="text-red-500 text-sm mt-1">
+          <div
+            *ngIf="productForm.controls['categoryId'].invalid && productForm.controls['categoryId'].dirty"
+            class="text-red-500 text-sm mt-1"
+          >
             Category is required.
           </div>
         </div>
-  
-        <!-- Name Field -->
-        <div>
-          <label for="name" class="block text-gray-700 font-medium mb-1">Product Name</label>
-          <input
-            type="text"
-            id="name"
-            formControlName="name"
-            class="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter product name"
-          />
+      </div>
+
+      <!-- Name Field -->
+      <div>
+        <label for="name" class="block text-gray-700 font-medium mb-2">Product Name</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-300"
+          placeholder="Enter product name"
+        />
+      </div>
+
+      <!-- Price Field -->
+      <div>
+        <label for="price" class="block text-gray-700 font-medium mb-2">Price</label>
+        <input
+          type="text"
+          id="price"
+          formControlName="price"
+          class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+          placeholder="Enter product price"
+        />
+        <div
+          *ngIf="productForm.controls['price'].invalid && productForm.controls['price'].dirty"
+          class="text-red-500 text-sm mt-1"
+        >
+          Price is required and must be a valid number.
         </div>
-  
-        <!-- Price Field -->
-        <div>
-          <label for="price" class="block text-gray-700 font-medium mb-1">Price</label>
-          <input
-            type="text"
-            id="price"
-            formControlName="price"
-            class="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            placeholder="Enter product price"
-          />
-          <div *ngIf="productForm.controls['price'].invalid && productForm.controls['price'].dirty"
-            class="text-red-500 text-sm mt-1">
-            Price is required and must be a valid number.
-          </div>
-        </div>
-  
-        <!-- File Upload -->
-        <div>
-          <label for="file" class="block text-gray-700 font-medium mb-1">Product Image</label>
-          <input
-            type="file"
-            id="file"
-            (change)="onFileSelected($event)"
-            class="w-full text-gray-700 focus:outline-none"
-          />
-          <div class="mt-2">
-            <img *ngIf="imagePreview" [src]="imagePreview" alt="Preview" class="w-32 h-32 object-cover rounded" />
-          </div>
-        </div>
-  
-        <!-- Submit Button -->
-        <div>
-          <button
-            type="submit"
-            [disabled]="!productForm.valid || !selectedFile"
-            class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none"
+      </div>
+
+      <!-- File Upload -->
+      <div>
+        <label for="file" class="block text-gray-700 font-medium mb-2">Product Image</label>
+        <input
+          type="file"
+          id="file"
+          (change)="onFileSelected($event)"
+          class="w-full text-gray-700 focus:outline-none"
+        />
+        <div class="mt-4 flex justify-center items-center">
+          <div
+            class="w-48 h-48 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg flex justify-center items-center overflow-hidden transition-all duration-300 hover:border-purple-500"
           >
-            Add Product
-          </button>
+            <img
+              *ngIf="imagePreview"
+              [src]="imagePreview"
+              alt="Preview"
+              class="w-full h-full object-cover rounded"
+            />
+            <span *ngIf="!imagePreview" class="text-gray-400">No Image Selected</span>
+          </div>
         </div>
-      </form>
-    </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div>
+        <button
+          type="submit"
+          [disabled]="!productForm.valid || !selectedFile"
+          class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 px-4 rounded-lg hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Add Product
+        </button>
+      </div>
+    </form>
   </div>
-  
+</div>

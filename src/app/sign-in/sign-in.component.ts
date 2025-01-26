@@ -70,6 +70,13 @@ export class SignInComponent implements OnInit {
   }
 
 
+  goToSignUp() {
+    this.authService.goToSignUpPage();
+  }
+
+  goHome() {
+    this.authService.goToHome();
+  }
 
 
 }

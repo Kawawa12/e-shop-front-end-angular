@@ -1,34 +1,99 @@
-<div class="flex justify-center items-center min-h-screen bg-gray-100">
-    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 w-full max-w-sm">
-      <h1 class="text-2xl font-bold text-gray-700 mb-4">Add Category</h1>
-  
-      <form (ngSubmit)="addCategory()" #categoryForm="ngForm" class="space-y-4">
+<div class="flex justify-center h-auto bg-gradient-to-r from-blue-50 to-purple-50 lg:px-16 py-8">
+  <div class="w-full max-w-4xl bg-white shadow-2xl rounded-2xl p-8 space-y-8 transform transition-transform duration-300 hover:scale-105">
+    <!-- Form Section -->
+    <div>
+      <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">
+        Add Category
+      </h1>
+      <form (ngSubmit)="addCategory()" #categoryForm="ngForm" class="space-y-6">
         <div>
-          <label for="name" class="block text-gray-700 font-medium mb-1">Category Name</label>
+          <label for="name" class="block text-gray-700 font-medium mb-2">Category Name</label>
           <input
             type="text"
             id="name"
             name="name"
-            [(ngModel)]="category.name"
+            [(ngModel)]="category.categoryName"
             required
-            class="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
             placeholder="Enter category name"
           />
-          <div *ngIf="categoryForm.submitted && !categoryForm.controls['name']?.valid" class="text-red-500 text-sm mt-1">
-            Name is required.
-          </div>
         </div>
-  
+
         <div>
           <button
             type="submit"
             [disabled]="!categoryForm.valid"
-            class="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none"
+            class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold py-3 px-4 rounded-lg hover:from-blue-700 hover:to-purple-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Add Category
           </button>
         </div>
       </form>
     </div>
+
+    <!-- Category List Section -->
+    <div class="flex justify-between items-center flex-wrap space-y-4">
+      <h2 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        Category List
+      </h2>
+      <!-- Search Input -->
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        (ngModelChange)="filterCategories()"
+        placeholder="Search categories..."
+        class="border-2 border-gray-200 px-4 py-2 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+      />
+    </div>
+
+    <!-- Table Section -->
+    <div class="overflow-x-auto">
+      <table class="w-full border-collapse">
+        <thead>
+          <tr class="bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+            <th class="px-6 py-4 text-left">Category Name</th>
+            <th class="px-6 py-4 text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Loop through filtered categories and display each one -->
+          <tr
+            *ngFor="let cat of filteredCategories | paginate: { itemsPerPage: pageSize, currentPage: page }; let i = index"
+            class="hover:bg-gray-50 transition-all duration-200"
+          >
+            <td class="border-b border-gray-200 px-6 py-4 text-gray-700">{{ cat.categoryName }}</td>
+            <td class="border-b border-gray-200 px-6 py-4 flex justify-center space-x-4">
+              <button
+                (click)="editCategory(i)"
+                class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition-all duration-300"
+              >
+                Update
+              </button>
+              <button
+                (click)="deleteCategory(i)"
+                class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-300"
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+
+          <!-- Display a message if no categories are found -->
+          <tr *ngIf="filteredCategories.length === 0">
+            <td colspan="2" class="text-center text-gray-500 py-6">
+              No categories found.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination Controls -->
+    <div class="mt-6 flex justify-end">
+      <pagination-controls
+        (pageChange)="page = $event"
+        class="pagination"
+      ></pagination-controls>
+    </div>
   </div>
-  
+</div>

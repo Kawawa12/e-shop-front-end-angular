@@ -1,46 +1,60 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth.service';
-import { AdminService } from '../services/admin.service';
 import { CommonModule } from '@angular/common';
+import { Product } from '../model';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AdminService } from '../services/admin.service';
+ 
+
 
 @Component({
   selector: 'app-admin',
-  imports: [CommonModule],
+  standalone: true, // Add this if using Angular 17+
+  imports: [CommonModule, ReactiveFormsModule, FormsModule,], // Add HttpClientModule
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.css']
+  styleUrls: ['./admin.component.css'],
 })
 export class AdminComponent implements OnInit {
+  products: Product[] = []; // Initialize as empty array
+  filteredProducts: Product[] = [];
+  searchTerm: string = '';
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
 
-  product: any;
-
-  constructor(private authService: AuthService, private adminService: AdminService) {}
+  constructor(private adminService: AdminService) {} // Inject your service
 
   ngOnInit(): void {
-    const productId = 3; // Example product ID
-    const categoryId = 1; // Example category ID
-    this.adminService.getProduct(productId, categoryId).subscribe(
-      (response) => {
-        this.product = response;
-        console.log('Product Data: ', this.product); // Corrected this line
-        console.log('Image URL: ', this.getImageUrl(this.product.imageUrl)); // Log the image URL
-      },
-      (error) => {
-        console.error('Failed to load product', error);
-      }
+    this.fetchProducts(); // Fetch products on component initialization
+  }
+
+  fetchProducts(): void {
+    this.adminService.getProducts().subscribe((data:Product[])=> {
+        this.products = data; // Assign fetched data to products array
+        this.filteredProducts = data; // Initialize filteredProducts with fetched data
+    });
+  }
+
+  onSearch(): void {
+    this.filteredProducts = this.products.filter((product) =>
+      product.name.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
+    this.currentPage = 1; // Reset to first page after filtering
   }
 
-  getImageUrl(imageUrl: string): string {
-    // Check if the imageUrl already contains "http" to avoid prepending the base URL again
-    if (imageUrl.startsWith('http')) {
-      return imageUrl; // Return the URL as it is if it is already a full URL
-    }
-    return `http://localhost:8080/images/${imageUrl.replace(' ', '%20')}`; // Prepend base URL if it's just a filename
+  onPageChange(page: number): void {
+    this.currentPage = page;
   }
-  
 
-  logout() {
-    this.authService.logoutToHome();
-    console.log('You logged out.');
+  getPaginatedProducts(): Product[] {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    return this.filteredProducts.slice(startIndex, startIndex + this.itemsPerPage);
+  }
+
+  getTotalPages(): number {
+    return Math.ceil(this.filteredProducts.length / this.itemsPerPage);
+  }
+
+  onDelete(product: Product): void {
+    this.products = this.products.filter((p) => p !== product);
+    this.filteredProducts = this.filteredProducts.filter((p) => p !== product);
   }
 }

@@ -1,0 +1,15 @@
+/* Make dropdown menu wider */
+div[ng-reflect-ng-class] .w-60 {
+    width: 15rem; /* Adjust the width as needed */
+  }
+  
+  /* Show dropdown menu on hover */
+  nav:hover div[ng-reflect-ng-class] {
+    display: block;
+  }
+  
+  /* Hide dropdown when clicking outside */
+  body {
+    position: relative;
+  }
+  

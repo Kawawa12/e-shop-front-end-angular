@@ -79,7 +79,7 @@ export class AddProductComponent implements OnInit {
             icon: 'success',
             confirmButtonText: 'OK'
           });
-          this.router.navigate(['/products']); // Redirect to products list
+          // this.router.navigate(['/products']); // Redirect to products list
         },
         (err) => {
           console.error('Error adding product:', err);

@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
+ 
 
   private BASE_URL = 'http://localhost:8080/auth/api';
 
@@ -34,6 +35,14 @@ export class AuthService {
 
   goToLoginPage(){
     this.router.navigate(['/sign-in']);
+  }
+
+  goToSignUpPage(){
+    this.router.navigate(['/sign-up']);
+  }
+
+  goToHome() {
+     this.router.navigate(['/home'])
   }
 
   goToAdmin(){

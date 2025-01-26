@@ -1,20 +1,164 @@
-<div class="h-screen w-full bg-white">
-    <div class="flex justify-between">
-      <!-- Left container for menu items -->
-      <div 
-        class="bg-gray-600 h-screen transition-all duration-300"
-        [ngClass]="{ 'w-[14%] md:w-[8%] lg:w-[12%] xl:w-[16%]': isSidebarOpen, 'w-0': !isSidebarOpen }"
-      >
-        <app-menu *ngIf="isSidebarOpen" />
-      </div>
-  
-      <!-- Right container -->
-      <div 
-        class="bg-blue-200 transition-all duration-300"
-        [ngClass]="{ 'w-[86%] md:w-[92%] lg:w-[88%] xl:w-[84%]': isSidebarOpen, 'w-full': !isSidebarOpen }"
-      >
-        <app-navbar (toggleSidebar)="toggleSidebar()" />
-      </div>
+<div class="flex h-screen">
+  <!-- Sidebar -->
+  <div
+    class="fixed inset-y-0 left-0 z-30 w-64 bg-gray-800 rounded-tr-2xl text-white transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:block"
+    [class.-translate-x-full]="!isSidebarOpen" [class.translate-x-0]="isSidebarOpen">
+    <div class="flex items-center justify-between rounded-tr-2xl py-7 px-4 text-xl font-semibold bg-blue-600">
+      <span>Shop</span>
+      <button class="lg:hidden" (click)="closeSidebar()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
     </div>
+    <nav class="p-4 space-y-2">
+      <div class="text-gray-500 text-lg p-2 ">MENU</div>
+      <ul class="space-y-2">
+        <li>
+          <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded"
+            [routerLink]="['/admin/dashboard']" routerLinkActive="bg-gray-700 text-white">
+            <!-- Dashboard Icon -->
+            <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+              width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+              <path fill-rule="evenodd"
+                d="M11.293 3.293a1 1 0 0 1 1.414 0l6 6 2 2a1 1 0 0 1-1.414 1.414L19 12.414V19a2 2 0 0 1-2 2h-3a1 1 0 0 1-1-1v-3h-2v3a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2v-6.586l-.293.293a1 1 0 0 1-1.414-1.414l2-2 6-6Z"
+                clip-rule="evenodd" />
+            </svg>
+
+            <span class="text-lg  text-gray-400">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded"
+            [routerLink]="['/admin/product']" routerLinkActive="bg-gray-700 text-white">
+            <!-- Products Icon -->
+            <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15v3c0 .5523.44772 1 1 1h8v-8m-9 4v-4m0 4h9m-9-4V6c0-.55228.44772-1 1-1h16c.5523 0 1 .44772 1 1v4M3 11h11m6.25 5c0 1.2426-1.0073 2.25-2.25 2.25M20.25 16c0-1.2426-1.0073-2.25-2.25-2.25M20.25 16H21m-3 2.25c-1.2426 0-2.25-1.0074-2.25-2.25M18 18.25V19m-2.25-3c0-1.2426 1.0074-2.25 2.25-2.25M15.75 16H15m3-2.25V13m-1.591 1.409-.5303-.5303m4.2426 4.2426-.5303-.5303m-3.182 0-.5303.5303m4.2426-4.2426-.5303.5303"/>
+            </svg>            
+            <span class="text-lg text-gray-400">Products</span>
+          </a>
+        </li>
+        <li>
+          <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded"
+            [routerLink]="['/admin/category']" routerLinkActive="bg-gray-700 text-white">
+            <!-- Category Icon -->
+            <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+              <path fill-rule="evenodd"
+                d="M20 10H4v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8ZM9 13v-1h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1Z"
+                clip-rule="evenodd" />
+              <path d="M2 6a2 2 0 0 1 2-2h16a2 2 0 1 1 0 4H4a2 2 0 0 1-2-2Z" />
+            </svg>
+            <span class="text-lg text-gray-400">Category</span>
+          </a>
+        </li>
+        <li>
+          <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded"
+            [routerLink]="['/admin/order']" routerLinkActive="bg-gray-700 text-white">
+            <!-- Orders Icon -->
+            <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+              <path fill-rule="evenodd"
+                d="M3 4a1 1 0 0 0-.822 1.57L6.632 12l-4.454 6.43A1 1 0 0 0 3 20h13.153a1 1 0 0 0 .822-.43l4.847-7a1 1 0 0 0 0-1.14l-4.847-7a1 1 0 0 0-.822-.43H3Z"
+                clip-rule="evenodd" />
+            </svg>
+            <span class="text-lg text-gray-400">Orders</span>
+          </a>
+        </li>
+
+        <li>
+          <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded"
+            [routerLink]="['/admin/coupon']" routerLinkActive="bg-gray-700 text-white">
+            <!-- Coupons Icon -->
+            <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+              <path fill-rule="evenodd"
+                d="M6 2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h12a1 1 0 1 0 0-2h-2v-2h2a1 1 0 0 0 1-1V4a2 2 0 0 0-2-2h-8v16h5v2H7a1 1 0 1 1 0-2h1V2H6Z"
+                clip-rule="evenodd" />
+            </svg>
+            <span class="text-lg text-gray-400">Coupons</span>
+          </a>
+        </li>
+
+        <li>
+          <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded"
+            [routerLink]="['/admin/stock']" routerLinkActive="bg-gray-700 text-white">
+            <!-- Stock Icon -->
+            <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 21">
+              <path
+                d="M15 12a1 1 0 0 0 .962-.726l2-7A1 1 0 0 0 17 3H3.77L3.175.745A1 1 0 0 0 2.208 0H1a1 1 0 0 0 0 2h.438l.6 2.255v.019l2 7 .746 2.986A3 3 0 1 0 9 17a2.966 2.966 0 0 0-.184-1h2.368c-.118.32-.18.659-.184 1a3 3 0 1 0 3-3H6.78l-.5-2H15Z" />
+            </svg>
+            <span class="text-lg text-gray-400">Stock</span>
+          </a>
+        </li>
+
+        <li>
+          <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded"
+            [routerLink]="['/admin/analytics']" routerLinkActive="bg-gray-700 text-white">
+            <!-- Analytics icon -->
+            <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+              <path
+                d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
+              <path
+                d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
+            </svg>
+            <span class="text-lg text-gray-400">Analytics</span>
+          </a>
+        </li>
+        <div class="text-gray-500 text-lg p-2">OTHERS</div>
+        <li>
+          <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded" (click)="logout()">
+            <!-- Comments icon -->
+            <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+              width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M7.556 8.5h8m-8 3.5H12m7.111-7H4.89a.896.896 0 0 0-.629.256.868.868 0 0 0-.26.619v9.25c0 .232.094.455.26.619A.896.896 0 0 0 4.89 16H9l3 4 3-4h4.111a.896.896 0 0 0 .629-.256.868.868 0 0 0 .26-.619v-9.25a.868.868 0 0 0-.26-.619.896.896 0 0 0-.63-.256Z" />
+            </svg>
+
+            <span class="text-lg text-gray-400">Comments</span>
+          </a>
+        </li>
+        <li>
+          <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded" (click)="logout()">
+            <!-- Profile icon -->
+            <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+              <path fill-rule="evenodd" d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z" clip-rule="evenodd"/>
+            </svg>            
+            <span class="text-lg text-gray-400">Profile</span>
+          </a>
+        </li>
+        <li>
+          <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded" (click)="logout()">
+            <!-- Logout Icon -->
+            <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3" />
+            </svg>
+            <span class="text-lg text-gray-400">Logout</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
-  
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col">
+    <header class="flex items-center justify-between px-4 h-20 bg-white shadow">
+      <button class="lg:hidden" (click)="toggleSidebar()">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+      </button>
+      <h1 class="text-lg font-semibold hidden lg:block">Dashboard</h1>
+      <span class="text-gray-700">John Jackson</span>
+    </header>
+    <main class="flex-1 overflow-y-auto p-2 bg-gray-100">
+      <router-outlet />
+    </main>
+  </div>
+</div>
