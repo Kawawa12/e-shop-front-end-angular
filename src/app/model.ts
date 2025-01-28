@@ -14,6 +14,7 @@ export interface SignIn {
 
  
 export interface Product {
+[x: string]: any;
 description: any;
     id: number;
     name: string;
@@ -26,5 +27,17 @@ description: any;
 export interface Category{
    id:number,
    categoryName:string
+}
+
+export interface CustomerOrderDto{
+    id:number, //customer id
+    orderItems:{
+        id:number, //item id
+        itemName:string,
+        quantity:number,
+        pricePerItem: number,
+        totalPrice:number
+    },
+    totalAmount: number  //total amount calculated from total item list by adding total price to total amount per each order item
 }
   

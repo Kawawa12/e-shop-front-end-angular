@@ -1,0 +1,65 @@
+<div class="container mx-auto p-8 space-y-4 relative h-full flex flex-col">
+    <!-- Close Button -->
+    <div class="flex justify-between space-x-2 flex-wrap mt-4 gap-2">
+        <!-- Title -->
+        <div>
+            <h2 class="text-2xl font-bold text-gray-800 text-center">Cart Products</h2>
+        </div>
+        <button (click)="closeCart()"
+            class="absolute top-2 right-2 bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+            Close
+        </button>
+    </div>
+
+    <!-- Product Cards in One Column -->
+    <div class="grid grid-cols-1 gap-4 flex-grow">
+        <!-- Check if the cart is empty -->
+        <div *ngIf="cartItemsWithQuantity.length === 0" class="text-center text-xl font-semibold text-gray-600">
+            No selected item
+        </div>
+
+        <!-- Loop through cart items if available -->
+        <div *ngFor="let cartItem of cartItemsWithQuantity"
+            class="bg-white shadow-lg rounded-lg px-4 flex items-center space-x-8">
+            <!-- Image Section -->
+            <div class="w-32 h-32 bg-gray-100 rounded-lg flex justify-center items-center mr-6">
+                <img *ngIf="cartItem.product['image']" [src]="cartItem.product['image']"
+                    alt="{{ cartItem.product['name'] }}" class="w-full h-full object-contain rounded" />
+                <span *ngIf="!cartItem.product['image']" class="text-gray-500">No Image</span>
+            </div>
+
+            <!-- Product Details Section -->
+            <div class="flex flex-col space-y-4 items-center pb-4 flex-grow ml-4">
+                <h3 class="text-xl font-semibold text-gray-800">{{ cartItem.product['name'] }}</h3>
+                <p class="text-blue-600 font-bold text-lg">Tsh {{ cartItem.product['price'] }}/=</p>
+                <p class="text-sm text-gray-600">Quantity: {{ cartItem.quantity }}</p>
+
+                <div class="flex space-x-4">
+                    <button (click)="incrementQuantity(cartItem)"
+                        class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                        +
+                    </button>
+                    <button (click)="decrementQuantity(cartItem)" [disabled]="cartItem.quantity === 1"
+                        class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed">
+                        -
+                    </button>
+                </div>
+
+                <!-- Remove Item Button -->
+                <button (click)="removeItem(cartItem)"
+                    class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 mt-4">
+                    Remove Item
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="cartItemsWithQuantity.length > 0" class="flex justify-between space-x-2 flex-wrap mt-4 gap-2">
+        <!-- Total Amount -->
+        <h3 class="text-xl font-semibold font-mono text-gray-700">Total: Tsh {{ totalAmount }}/=</h3>
+        <button (click)="placeOrder()" [disabled]="cartItemsWithQuantity.length === 0"
+            class="bg-blue-500 text-white px-4 py-2 rounded-xl hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed">
+            Place Order
+        </button>
+    </div>
+</div>
