@@ -1,18 +1,28 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { SignUp } from '../model';
+import { CustomerOrderDto, SignUp } from '../model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  private BSE_URL = 'http://localhost:8080/auth/api';
+  private BASE_URL = 'http://localhost:8080/auth/api';
 
   constructor(private http:HttpClient) { }
 
   register(request:SignUp): Observable<any> {
-    const url = `${this.BSE_URL}/sign-up`;
+    const url = `${this.BASE_URL}/sign-up`;
     return this.http.post<any>(url, request);
   }
+
+  placeOrder(order: CustomerOrderDto, email: string): Observable<any> {
+    const url = `${this.BASE_URL}/place-order`;
+  
+    // Correctly set email as an HTTP parameter
+    const params = new HttpParams().set('email', email);
+  
+    return this.http.post<any>(url, order, { params });
+  }
+  
 }

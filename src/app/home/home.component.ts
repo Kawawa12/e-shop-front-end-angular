@@ -35,7 +35,7 @@ export class HomeComponent implements OnInit {
     };
     this.tempProductList.push(tempProduct);
     this.cartItemCount = this.tempProductList.length;
-    console.log(`${product.name} added to cart!`, tempProduct);
+    console.log(`${product.name} added to cart!`);
   }
 
   // Open the cart dialog and pass the list of products to the CartComponent
@@ -45,6 +45,7 @@ export class HomeComponent implements OnInit {
       width: '500px',
       height: '700px',
       data: this.tempProductList, // Passing the cart items to the dialog
+      
     });
 
     dialogRef.componentInstance.cartUpdated.subscribe(({ products, count }) => {
@@ -57,6 +58,8 @@ export class HomeComponent implements OnInit {
       }));
       this.cartItemCount = count; // Update the cart count
     });
+
+    
   }
 
   ngOnInit(): void {
@@ -64,7 +67,7 @@ export class HomeComponent implements OnInit {
     this.adminService.getProducts().subscribe(
       (data) => {
         this.products = data;
-        console.log(data);
+        //console.log(data);
       },
       (error) => {
         console.error('Error fetching products', error);

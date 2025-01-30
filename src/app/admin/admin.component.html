@@ -93,6 +93,7 @@
           <tr class="bg-gray-100">
             <th class="p-3 text-gray-700">Product Name</th>
             <th class="p-3 text-gray-700">Price</th>
+            <th class="p-3 text-gray-700">Stock Quantity</th>
             <th class="p-3 text-gray-700">Image</th>
             <th class="p-3 text-gray-700 text-center">Actions</th>
           </tr>
@@ -108,6 +109,7 @@
           >
             <td class="p-3 text-gray-700">{{ product.name }}</td>
             <td class="p-3 text-gray-700">Tsh {{ product.price }}/=</td>
+            <td class="p-3 text-gray-700">{{ product.stock }}</td>
             <td class="p-3">
               <img
                 *ngIf="product.byteImage"
@@ -117,6 +119,7 @@
               />
               <span *ngIf="!product.byteImage" class="text-gray-500">No Image</span>
             </td>
+            
             <td class="p-3 flex justify-center items-center space-x-2">
               <button class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition-colors duration-200">
                 Update

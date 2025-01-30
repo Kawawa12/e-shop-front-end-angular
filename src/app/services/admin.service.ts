@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Category, Product } from '../model';
+import { Category, CustomerOrderRespDto, Product } from '../model';
 
 @Injectable({
   providedIn: 'root'
@@ -53,8 +53,10 @@ export class AdminService {
     return this.http.get<Product[]>(url);
   }
   
-  
-  
+  getAllOrders(): Observable<CustomerOrderRespDto[]> {
+    const url = `${this.BASE_URL}/orders`;
+    return this.http.get<CustomerOrderRespDto[]>(url);
+  }
 
 
 }

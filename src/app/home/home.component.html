@@ -156,10 +156,10 @@
   <div *ngIf="products.length > 0; else noProducts" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
     <div *ngFor="let product of products" class="bg-white shadow-lg rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
       <!-- Image Section -->
-      <div class="w-full h-64 bg-gray-100 flex justify-center items-center">
+      <div class="w-full h-80 bg-gray-100 flex justify-center items-center">
         <img *ngIf="product.byteImage" [src]="'data:image/jpeg;base64,' + product.byteImage" alt="{{ product.name }}"
           class="w-full h-full object-cover" />
-        <div *ngIf="!product.byteImage" class="w-full h-64 bg-gray-300 flex items-center justify-center text-gray-500">
+        <div *ngIf="!product.byteImage" class="w-full h-80 bg-gray-300 flex items-center justify-center text-gray-500">
           <span>No Image</span>
         </div>
       </div>
@@ -168,7 +168,7 @@
       <div class="p-6 space-y-3">
         <h3 class="text-xl font-semibold text-gray-800">{{ product.name }}</h3>
         <p class="text-lg font-bold text-blue-600">Tsh {{ product.price }}/=</p>
-        <p class="text-sm text-gray-600">{{ product.description || 'No description available.' }}</p>
+        <p class="text-sm text-gray-600">{{ product.desc || 'No description available.' }}</p>
       </div>
 
       <!-- Card Footer -->
