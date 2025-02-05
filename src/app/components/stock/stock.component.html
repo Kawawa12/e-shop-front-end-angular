@@ -1,0 +1,119 @@
+<div class="bg-white shadow-sm z-10 p-2 h-screen">
+    <!-- Form Section -->
+    <div class="bg-gray-300 rounded-lg mb-2">
+      <span class="text-gray-700 font-mono font-semibold text-xl py-6 flex justify-center items-center">
+        Add Stock Quantity To Product
+      </span>
+      <form [formGroup]="stockForm" class="bg-white p-6 rounded-lg shadow-md">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Product Name Input -->
+          <div class="flex flex-col space-y-2">
+            <label for="productName" class="block text-gray-700 font-medium mb-1">Product Name</label>
+            <div class="flex items-center space-x-2 flex-wrap gap-2">
+              <input
+                type="text"
+                id="productName"
+                formControlName="productName"
+                placeholder="Product name"
+                class="lg:w-[60%] p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-gray-400 focus:outline-none"
+                required
+                readonly
+              />
+              <button
+                (click)="openProductDialog()"
+                class="text-white bg-blue-800 rounded-lg px-4 py-4 hover:bg-blue-700 transition-all duration-300"
+              >
+                Click Here to get Product name
+              </button>
+            </div>
+            <!-- Validation Message -->
+            <div *ngIf="stockForm.get('productName')?.invalid && stockForm.get('productName')?.touched" class="text-red-500 text-sm">
+              Product name is required.
+            </div>
+          </div>
+  
+          <!-- Stock Quantity Input -->
+          <div class="flex flex-col space-y-2">
+            <label for="stockQuantity" class="block text-gray-700 font-medium mb-1">Stock Quantity</label>
+            <input
+              type="number"
+              id="stockQuantity"
+              formControlName="stockQuantity"
+              placeholder="Enter quantity"
+              class="w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              required
+            />
+            <!-- Validation Message -->
+            <div *ngIf="stockForm.get('stockQuantity')?.invalid && stockForm.get('stockQuantity')?.touched" class="text-red-500 text-sm">
+              Stock quantity is required and must be a valid number.
+            </div>
+          </div>
+        </div>
+  
+        <!-- Submit Button -->
+        <div class="flex justify-end mt-6">
+          <button
+          (click)="addStock()"
+            class="bg-blue-900 hover:bg-blue-800 text-white py-2 px-8 rounded-lg transition-all duration-300"
+            [disabled]="stockForm.invalid"
+          >
+            Add Stock
+          </button>
+        </div>
+      </form>
+    </div>
+  
+    <!-- Table Section -->
+    <div class="flex py-2 mt-4 justify-center items-center">
+      <span class="text-xl text-gray-800 font-mono">Stock Products List</span>
+    </div>
+  
+    <!-- Search Input -->
+    <mat-form-field class="w-full">
+      <mat-label>Search Products</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Filter product" #input />
+    </mat-form-field>
+  
+    <!-- Table -->
+    <div class="mat-elevation-z8 bg-white z-10 overflow-x-auto">
+        <table mat-table [dataSource]="dataSource" matSort>
+          <!-- Columns and Rows -->
+          <ng-container matColumnDef="productName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Product Name</th>
+            <td mat-cell *matCellDef="let row">{{ row.productName }}</td>
+          </ng-container>
+          <ng-container matColumnDef="stockQuantity">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Stock Quantity</th>
+            <td mat-cell *matCellDef="let row">{{ row.stockQuantity }}</td>
+          </ng-container>
+          <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Date Created</th>
+            <td mat-cell *matCellDef="let row">{{ row.createdAt | date: 'medium' }}</td>
+          </ng-container>
+          <ng-container matColumnDef="updatedAt">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Date Updated</th>
+            <td mat-cell *matCellDef="let row">{{ row.updatedAt | date: 'medium' }}</td>
+          </ng-container>
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let row" class="flex space-x-2">
+              <button class="bg-sky-500 text-white px-4 py-2 rounded-lg hover:bg-sky-600" (click)="updateProduct(row)">
+                Update stock
+              </button>
+            </td>
+          </ng-container>
+      
+          <!-- Header and Row Definitions -->
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      
+          <!-- No Data Row -->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="5">No data matching the filter "{{ input.value }}"</td>
+          </tr>
+        </table>
+      
+        <!-- Paginator -->
+        <mat-paginator class="custom-paginator" [pageSizeOptions]="[10, 25, 50, 100]" aria-label="Select page of products"></mat-paginator>
+      </div>
+  </div>

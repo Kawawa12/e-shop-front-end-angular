@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -10,11 +10,15 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./layout.component.css'],
   imports: [CommonModule, RouterLink,RouterOutlet],
 })
-export class LayoutComponent {
+export class LayoutComponent implements OnInit{
  
   isSidebarOpen = false;
 
-  constructor(private authService:AuthService) {
+  constructor(private authService:AuthService,private router:Router) {
+     
+  }
+
+  ngOnInit(): void {
      
   }
 
@@ -28,6 +32,5 @@ export class LayoutComponent {
 
   logout() {
     this.authService.logoutToHome();
-    console.log('You logged out.');
   }
 }

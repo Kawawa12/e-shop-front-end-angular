@@ -50,9 +50,7 @@ export class AuthService {
   }
 
   logoutToHome(){
-    localStorage.removeItem('jwtToken');
-    localStorage.removeItem('id');
-    localStorage.removeItem('role');
+    localStorage.clear();
     this.router.navigate(['home']);
   }
 

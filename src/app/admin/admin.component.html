@@ -1,3 +1,7 @@
+<div class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-50 z-40" *ngIf="isSubmitting">
+  <div class="h-32 w-32 border-8 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
+</div>
+
 <div class="p-2 sm:p-4">
   <!-- Cards Section (Top 4 Cards) -->
   <div class="flex flex-wrap justify-between gap-2 mb-4">
@@ -73,17 +77,21 @@
 
   <!-- Product Table Section -->
   <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-    <h2 class="text-xl font-semibold mb-4 text-gray-800">Product List</h2>
+    <h2 class="text-2xl font-semibold mb-4 text-gray-800 text-center">Product List</h2>
 
     <!-- Search Filter -->
-    <div class="mb-4">
+    <div class="mb-4 flex justify-between flex-wrap items-center">
       <input
         type="text"
         [(ngModel)]="searchTerm"
         (input)="onSearch()"
         placeholder="Search products..."
-        class="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        class="w-2/3 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
+      <div class="flex justify-end flex-wrap gap-2 p-2">
+        <button (click)="activeProducts()" class="bg-green-600 px-4 py-2 text-white rounded hover:bg-green-500">Active Products</button>
+        <button (click)="inActiveProducts()"  class="bg-red-500 px-4 py-2 mr-4 text-white rounded hover:bg-red-400">Diactivated Products</button>
+    </div>
     </div>
 
     <!-- Table -->
@@ -92,7 +100,7 @@
         <thead>
           <tr class="bg-gray-100">
             <th class="p-3 text-gray-700">Product Name</th>
-            <th class="p-3 text-gray-700">Price</th>
+            <th class="p-3 text-gray-700">Price in (Tsh)</th>
             <th class="p-3 text-gray-700">Stock Quantity</th>
             <th class="p-3 text-gray-700">Image</th>
             <th class="p-3 text-gray-700 text-center">Actions</th>
@@ -108,7 +116,7 @@
             }"
           >
             <td class="p-3 text-gray-700">{{ product.name }}</td>
-            <td class="p-3 text-gray-700">Tsh {{ product.price }}/=</td>
+            <td class="p-3 text-gray-700">{{ product.price }}/=</td>
             <td class="p-3 text-gray-700">{{ product.stock }}</td>
             <td class="p-3">
               <img
@@ -116,13 +124,22 @@
                 [src]="'data:image/jpeg;base64,' + product.byteImage"
                 alt="{{ product.name }}"
                 class="w-16 h-16 object-cover rounded-2xl"
+                (click)="openModal(product.byteImage)"
               />
               <span *ngIf="!product.byteImage" class="text-gray-500">No Image</span>
             </td>
             
             <td class="p-3 flex justify-center items-center space-x-2">
-              <button class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition-colors duration-200">
+              <button class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-500 transition-colors duration-200">
                 Update
+              </button>
+              <button *ngIf="!isActiveProductsDisplaying"
+              class="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-500" (click)="activateProduct(product.id)">
+                Activate
+              </button>
+              <button *ngIf="isActiveProductsDisplaying"
+              class="bg-pink-600 text-white px-3 py-1 rounded hover:bg-pink-500" (click)="deactivateProduct(product.id)">
+                Deactivate
               </button>
               <button
                 (click)="onDelete(product)"

@@ -1,0 +1,47 @@
+<div class="p-6 rounded-xl">
+    <h2 class="text-lg font-semibold text-gray-800 text-center">Select a Product</h2>
+  
+    <!-- Search Input -->
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      (input)="filterProducts()"
+      placeholder="Search for a product..."
+      class="w-full p-2 mt-4 border border-gray-400 rounded-lg focus:ring-2 focus:ring-blue-300 focus:outline-none"
+    />
+  
+    <!-- Product Table -->
+    <div class="mt-8 max-h-96 overflow-y-auto border border-gray-200 rounded-lg">
+      <table class="w-full border-collapse">
+        <thead class="bg-gray-100">
+          <tr>
+            <th class="p-2 border">Product Name</th>
+            <th class="p-2 border">Stock Quantity</th>
+            <th class="p-2 border">Select</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let product of filteredProducts"
+            class="hover:bg-gray-50 cursor-pointer"
+          >
+            <td class="p-2 border">{{ product.productName }}</td>
+            <td class="p-2 border text-center">{{ product.stockQuantity }}</td>
+            <td class="p-2 border text-center">
+              <button 
+                (click)="selectProduct(product)" 
+                class="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-700">
+                Select
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+    <!-- Close Button -->
+    <div class="flex justify-end mt-4">
+      <button (click)="closeDialog()" class="bg-gray-500 text-white px-4 py-2 rounded-lg">Close</button>
+    </div>
+  </div>
+  

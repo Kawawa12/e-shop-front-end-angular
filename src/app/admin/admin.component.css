@@ -1,0 +1,6 @@
+/* Custom dialog container */
+.custom-dialog-container .mat-dialog-container {
+    padding: 0;
+    border-radius: 12px;
+    overflow: hidden;
+  }

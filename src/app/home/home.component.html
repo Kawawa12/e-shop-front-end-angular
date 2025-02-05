@@ -1,17 +1,25 @@
 <!-- Header Section -->
 <header
   class="fixed w-full z-50 transition-all duration-300"
-  [ngClass]="{ 'shadow-md bg-white': isHeaderSolid, 'bg-transparent': !isHeaderSolid }"
+  [ngClass]="{
+    'shadow-md bg-white': isHeaderSolid,
+    'bg-transparent': !isHeaderSolid
+  }"
 >
   <div class="w-full mx-auto px-6 py-6 flex justify-between items-center">
     <!-- Logo -->
     <div class="text-2xl font-bold text-gray-600 hidden lg:block">
-      <a href="#" class="hover:text-blue-600 transition-colors duration-300">Rambo Shop</a>
+      <a href="#" class="hover:text-blue-600 transition-colors duration-300"
+        >Rambo Shop</a
+      >
     </div>
 
     <!-- Hamburger Menu (Visible on Small Screens) -->
     <div class="sm:hidden relative">
-      <button (click)="toggleDropdown()" class="text-gray-700 hover:text-blue-600">
+      <button
+        (click)="toggleDropdown()"
+        class="text-gray-700 hover:text-blue-600"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-6 w-6"
@@ -19,23 +27,53 @@
           viewBox="0 0 24 24"
           stroke="currentColor"
         >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          />
         </svg>
       </button>
     </div>
 
     <!-- Navigation Links (Hidden on Small Devices) -->
     <nav class="hidden sm:flex items-center space-x-6 ml-auto mr-5">
-      <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors duration-300">Home</a>
-      <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors duration-300">Shop</a>
-      <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors duration-300">About</a>
-      <a href="#" class="text-gray-700 hover:text-blue-600 transition-colors duration-300">Contact</a>
+      <a
+        href="#"
+        class="text-gray-700 hover:text-blue-600 transition-colors duration-300"
+        >Home</a
+      >
+      <a
+        href="#"
+        class="text-gray-700 hover:text-blue-600 transition-colors duration-300"
+        >Shop</a
+      >
+      <a
+        href="#"
+        class="text-gray-700 hover:text-blue-600 transition-colors duration-300"
+        >About</a
+      >
+      <a
+        href="#"
+        class="text-gray-700 hover:text-blue-600 transition-colors duration-300"
+        >Contact</a
+      >
     </nav>
 
     <!-- Cart and Buttons -->
     <div class="flex items-center space-x-6">
-      <button (click)="openCart()" class="relative text-gray-700 hover:text-blue-600 transition-colors duration-300">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <button
+        (click)="openCart()"
+        class="relative text-gray-700 hover:text-blue-600 transition-colors duration-300"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
@@ -43,26 +81,44 @@
             d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
           />
         </svg>
-        <span *ngIf="cartItemCount > 0" class="absolute -top-2 -right-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full">
+        <span
+          *ngIf="cartItemCount > 0"
+          class="absolute -top-2 -right-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full"
+        >
           {{ cartItemCount }}
         </span>
-        <span *ngIf="cartItemCount === 0" class="absolute -top-2 -right-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full">
+        <span
+          *ngIf="cartItemCount === 0"
+          class="absolute -top-2 -right-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white bg-red-600 rounded-full"
+        >
           0
         </span>
       </button>
-      
-      <button
-        (click)="login()"
-        class="text-blue-600 border border-blue-600 rounded-lg px-4 py-2 hover:bg-blue-600 hover:text-white transition-colors duration-300"
-      >
-        Sign In
-      </button>
-      <button
-        (click)="signUp()"
-        class="text-white bg-blue-600 rounded-lg px-4 py-2 hover:bg-blue-700 transition-colors duration-300"
-      >
-        Sign Up
-      </button>
+
+      <!-- Sign In / Logout Button -->
+      <ng-container *ngIf="!isLoggedIn; else loggedInTemplate">
+        <button
+          (click)="login()"
+          class="text-blue-600 border border-blue-600 rounded-lg px-4 py-2 hover:bg-blue-600 hover:text-white transition-colors duration-300"
+        >
+          Sign In
+        </button>
+        <button
+          (click)="signUp()"
+          class="text-white bg-blue-600 rounded-lg px-4 py-2 hover:bg-blue-700 transition-colors duration-300"
+        >
+          Sign Up
+        </button>
+      </ng-container>
+    
+      <ng-template #loggedInTemplate>
+        <button
+          (click)="logout()"
+          class="text-red-600 border border-red-600 rounded-lg px-4 py-2 hover:bg-red-600 hover:text-white transition-colors duration-300"
+        >
+          Logout
+        </button>
+      </ng-template>
     </div>
   </div>
 
@@ -73,7 +129,10 @@
     (click)="toggleDropdown()"
   ></div>
   <div
-    [ngClass]="{ '-translate-x-full': !isDropdownOpen, 'translate-x-0': isDropdownOpen }"
+    [ngClass]="{
+      '-translate-x-full': !isDropdownOpen,
+      'translate-x-0': isDropdownOpen
+    }"
     class="fixed inset-y-0 left-0 w-64 bg-white z-50 transform transition-transform duration-300 ease-in-out rounded-tr-lg rounded-br-lg"
   >
     <!-- Close Button -->
@@ -88,30 +147,66 @@
         viewBox="0 0 24 24"
         stroke="currentColor"
       >
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M6 18L18 6M6 6l12 12"
+        />
       </svg>
     </button>
 
     <!-- Navigation Links -->
     <div class="px-6 py-4">
-      <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-300">Home</a>
-      <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-300">Shop</a>
-      <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-300">About</a>
-      <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-300">Contact</a>
+      <a
+        href="#"
+        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-300"
+        >Home</a
+      >
+      <a
+        href="#"
+        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-300"
+        >Shop</a
+      >
+      <a
+        href="#"
+        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-300"
+        >About</a
+      >
+      <a
+        href="#"
+        class="block px-4 py-2 text-gray-700 hover:bg-gray-100 transition-colors duration-300"
+        >Contact</a
+      >
     </div>
   </div>
 </header>
 
 <!-- Hero Section -->
-<section class="relative mt-0 h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden">
+<section
+  class="relative mt-0 h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden"
+>
   <!-- Background Image -->
-  <img src="/images/back.jpg" alt="Hero Background" class="w-full h-full object-cover" />
+  <img
+    src="/images/back.jpg"
+    alt="Hero Background"
+    class="w-full h-full object-cover"
+  />
 
   <!-- Floating Text Overlay -->
-  <div class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-center text-white">
-    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Welcome to Rambo E-Commerce Store</h1>
-    <p class="text-lg sm:text-xl md:text-2xl mb-8">Discover the latest trends and shop the best products.</p>
-    <a href="#" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-200">
+  <div
+    class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-center text-white"
+  >
+    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+      Welcome to Rambo E-Commerce Store
+    </h1>
+    <p class="text-lg sm:text-xl md:text-2xl mb-8">
+      Discover the latest trends and shop the best products.
+    </p>
+    <a
+      href="#"
+      class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-200"
+    >
       Shop Now
     </a>
   </div>
@@ -122,7 +217,9 @@
   <!-- Category List -->
   <div class="flex overflow-x-auto items-center space-x-4 pb-4">
     <!-- Static "All" Button -->
-    <button class="flex-none whitespace-nowrap px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition duration-200">
+    <button
+      class="flex-none whitespace-nowrap px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition duration-200"
+    >
       All
     </button>
 
@@ -140,12 +237,29 @@
   <!-- Search Bar -->
   <div class="flex items-center space-x-2 mt-4">
     <div class="relative w-2/3">
-      <input type="text" placeholder="Search products..." class="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" />
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      <input
+        type="text"
+        placeholder="Search products..."
+        class="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+      />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-5 w-5 absolute left-3 top-3 text-gray-500"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+        />
       </svg>
     </div>
-    <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200">
+    <button
+      class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200"
+    >
       Search
     </button>
   </div>
@@ -153,13 +267,26 @@
 
 <!-- Product List Section -->
 <section class="container mx-auto px-6 py-12 lg:px-16">
-  <div *ngIf="products.length > 0; else noProducts" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    <div *ngFor="let product of products" class="bg-white shadow-lg rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl">
+  <div
+    *ngIf="products.length > 0; else noProducts"
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+  >
+    <div
+      *ngFor="let product of products"
+      class="bg-white shadow-lg rounded-lg overflow-hidden transition-all duration-300 hover:shadow-xl"
+    >
       <!-- Image Section -->
       <div class="w-full h-80 bg-gray-100 flex justify-center items-center">
-        <img *ngIf="product.byteImage" [src]="'data:image/jpeg;base64,' + product.byteImage" alt="{{ product.name }}"
-          class="w-full h-full object-cover" />
-        <div *ngIf="!product.byteImage" class="w-full h-80 bg-gray-300 flex items-center justify-center text-gray-500">
+        <img
+          *ngIf="product.byteImage"
+          [src]="'data:image/jpeg;base64,' + product.byteImage"
+          alt="{{ product.name }}"
+          class="w-full h-full object-cover"
+        />
+        <div
+          *ngIf="!product.byteImage"
+          class="w-full h-80 bg-gray-300 flex items-center justify-center text-gray-500"
+        >
           <span>No Image</span>
         </div>
       </div>
@@ -168,13 +295,17 @@
       <div class="p-6 space-y-3">
         <h3 class="text-xl font-semibold text-gray-800">{{ product.name }}</h3>
         <p class="text-lg font-bold text-blue-600">Tsh {{ product.price }}/=</p>
-        <p class="text-sm text-gray-600">{{ product.desc || 'No description available.' }}</p>
+        <p class="text-sm text-gray-600">
+          {{ product.desc || "No description available." }}
+        </p>
       </div>
 
       <!-- Card Footer -->
       <div class="p-4 bg-gray-50 border-t">
-        <button (click)="addToCart(product)"
-        class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200">
+        <button
+          (click)="addToCart(product)"
+          class="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-200"
+        >
           Add to Cart
         </button>
       </div>
@@ -184,19 +315,29 @@
   <!-- Pagination -->
   <div class="flex justify-center mt-8">
     <nav class="inline-flex rounded-md shadow-sm">
-      <button class="px-4 py-2 bg-blue-600 text-white rounded-l-lg hover:bg-blue-700 transition duration-200">
+      <button
+        class="px-4 py-2 bg-blue-600 text-white rounded-l-lg hover:bg-blue-700 transition duration-200"
+      >
         Previous
       </button>
-      <button class="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 transition duration-200">
+      <button
+        class="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 transition duration-200"
+      >
         1
       </button>
-      <button class="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 transition duration-200">
+      <button
+        class="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 transition duration-200"
+      >
         2
       </button>
-      <button class="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 transition duration-200">
+      <button
+        class="px-4 py-2 bg-blue-600 text-white hover:bg-blue-700 transition duration-200"
+      >
         3
       </button>
-      <button class="px-4 py-2 bg-blue-600 text-white rounded-r-lg hover:bg-blue-700 transition duration-200">
+      <button
+        class="px-4 py-2 bg-blue-600 text-white rounded-r-lg hover:bg-blue-700 transition duration-200"
+      >
         Next
       </button>
     </nav>
@@ -234,7 +375,7 @@
       <iframe
         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3962.041926202498!2d39.28078231523105!3d-6.816668369224085!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185c4c0f1e8f1a1b%3A0x1f1f1f1f1f1f1f1f!2sDar%20es%20Salaam%2C%20Tanzania!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus"
         class="w-full h-48 rounded-lg"
-        style="border:0;"
+        style="border: 0"
         allowfullscreen=""
         loading="lazy"
       ></iframe>

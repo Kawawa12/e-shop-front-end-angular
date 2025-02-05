@@ -42,6 +42,7 @@ export interface CustomerOrderDto {
 
   export interface CustomerOrderRespDto {
     id: number;
+    userId: number;
       customerName: string;
       orderStatus: string,
       orderDate: Date,
@@ -53,5 +54,13 @@ export interface CustomerOrderDto {
           totalPrice:number,
       }[],
       totalAmount:number
+  }
+
+export interface StockResponseDto{
+  id?:number,
+  productName: string,
+  stockQuantity: number,
+  dateCreated: Date,
+  dateUpdated: Date,
   }
   

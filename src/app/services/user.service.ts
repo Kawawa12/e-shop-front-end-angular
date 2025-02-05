@@ -16,11 +16,11 @@ export class UserService {
     return this.http.post<any>(url, request);
   }
 
-  placeOrder(order: CustomerOrderDto, email: string): Observable<any> {
+  placeOrder(order: CustomerOrderDto, id:any): Observable<any> {
     const url = `${this.BASE_URL}/place-order`;
   
     // Correctly set email as an HTTP parameter
-    const params = new HttpParams().set('email', email);
+    const params = new HttpParams().set('id', id);
   
     return this.http.post<any>(url, order, { params });
   }

@@ -13,6 +13,7 @@ import { CouponComponent } from './components/coupon/coupon.component';
 import { OrderComponent } from './components/order/order.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AnalyticsComponent } from './components/analytics/analytics.component';
+import { StockComponent } from './components/stock/stock.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -30,17 +31,13 @@ export const routes: Routes = [
       { path: 'order', component: OrderComponent },
       { path: 'coupon', component: CouponComponent },
       { path: 'analysis', component: AnalyticsComponent },
-      { path: 'comment', component: CommentsComponent },
+      { path: 'comments', component: CommentsComponent },
       { path: 'profile', component: ProfileComponent },
-
+      { path: 'stock', component:StockComponent },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },
-  { 
-    path: 'place-order', 
-    component: PlaceOrderComponent, 
-    canActivate: [authGuard], 
-    data: { role: 'USER' } 
-  },
+  { path: 'place-order',component: PlaceOrderComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },  
   { path: '**', redirectTo: 'home', pathMatch: 'full' },  
 ];
