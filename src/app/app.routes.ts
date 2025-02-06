@@ -14,6 +14,12 @@ import { OrderComponent } from './components/order/order.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AnalyticsComponent } from './components/analytics/analytics.component';
 import { StockComponent } from './components/stock/stock.component';
+import { ManagerLayoutComponent } from './manager/manager-layout/manager-layout.component';
+import { ManagerDashboardComponent } from './manager/manager-dashboard/manager-dashboard.component';
+import { ManagementsComponent } from './manager/managements/managements.component';
+import { ManagerProfileComponent } from './manager/manager-profile/manager-profile.component';
+import { ManageAdminsComponent } from './manager/manage-admins/manage-admins.component';
+import { ViewCommentsComponent } from './manager/view-comments/view-comments.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -37,6 +43,19 @@ export const routes: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },
+  {
+    path: 'manager', component: ManagerLayoutComponent,
+    canActivate: [authGuard],
+    data: { role: 'MANAGER' },
+    children: [
+      { path: 'dashboard', component: ManagerDashboardComponent },
+      { path: 'management', component: ManagementsComponent },
+      { path: 'profile', component: ManagerProfileComponent },
+      { path: 'manage-admin', component: ManageAdminsComponent },
+      { path: 'analysis', component: AnalyticsComponent },
+      { path: 'comments', component: ViewCommentsComponent },
+    ]
+   },
   { path: 'place-order',component: PlaceOrderComponent},
   { path: '', redirectTo: 'home', pathMatch: 'full' },  
   { path: '**', redirectTo: 'home', pathMatch: 'full' },  

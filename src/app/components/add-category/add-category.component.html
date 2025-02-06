@@ -1,5 +1,10 @@
-<div class="flex justify-center h-auto bg-gradient-to-r from-blue-50 to-purple-50 lg:px-16 py-8">
-  <div class="w-full max-w-4xl bg-white shadow-2xl rounded-2xl p-8 space-y-8 transform transition-transform duration-300 hover:scale-105">
+<!-- Loader Overlay (Inside the Modal) -->
+<div class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-50 z-40" *ngIf="isSubmitting">
+  <div class="h-32 w-32 border-8 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
+</div>
+
+<div class="flex justify-center bg-gradient-to-r from-blue-50 to-purple-50 lg:px-16 py-4">
+  <div class="w-full max-w-4xl bg-white shadow-2xl rounded-2xl p-8 space-y-8 transform transition-transform duration-300 hover:scale-15">
     <!-- Form Section -->
     <div>
       <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">
@@ -65,13 +70,13 @@
             <td class="border-b border-gray-200 px-6 py-4 flex justify-center space-x-4">
               <button
                 (click)="editCategory(i)"
-                class="bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition-all duration-300"
+                class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition-all duration-300"
               >
                 Update
               </button>
               <button
                 (click)="deleteCategory(i)"
-                class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-300"
+                class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-300"
               >
                 Delete
               </button>

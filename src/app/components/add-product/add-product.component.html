@@ -1,78 +1,83 @@
-<div class="flex justify-center items-center min-h-screen bg-gradient-to-r from-blue-50 to-purple-50 py-4">
-  <div class="bg-white shadow-2xl rounded-2xl px-8 pt-8 pb-8 w-full max-w-2xl mx-4 transform transition-transform duration-300 hover:scale-105">
+<div class="flex justify-center items-center bg-gradient-to-r from-blue-50 to-purple-50 py-4">
+  <div class="bg-white shadow-2xl rounded-2xl px-8 pt-8 pb-8 w-full max-w-4xl mx-4 transform transition-transform duration-300 hover:scale-15">
     <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">
       Add Product
     </h1>
 
     <form [formGroup]="productForm" (ngSubmit)="addProduct()" class="space-y-6">
-      <!-- Category Selection -->
-      <div class="flex gap-4">
-        <div class="w-2/3">
-          <label for="categoryId" class="block text-gray-700 font-medium mb-2">Select Category</label>
-          <select
-            id="categoryId"
-            formControlName="categoryId"
+     <!-- Category and Name Fields in One Row -->
+<div class="flex gap-6">
+  <!-- Category Selection -->
+  <div class="flex-1">
+    <label for="categoryId" class="block text-gray-700 font-medium mb-2">Select Category</label>
+    <select
+      id="categoryId"
+      formControlName="categoryId"
+      class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
+    >
+      <option value="" disabled>Select a category</option>
+      <option *ngFor="let category of listOfCategories" [value]="category.categoryId">
+        {{ category.categoryName }}
+      </option>
+    </select>
+    <div
+      *ngIf="productForm.controls['categoryId'].invalid && productForm.controls['categoryId'].dirty"
+      class="text-red-500 text-sm mt-1"
+    >
+      Category is required.
+    </div>
+  </div>
+
+  <!-- Name Field -->
+  <div class="flex-1">
+    <label for="name" class="block text-gray-700 font-medium mb-2">Product Name</label>
+    <input
+      type="text"
+      id="name"
+      formControlName="name"
+      class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-300"
+      placeholder="Enter product name"
+    />
+  </div>
+</div>
+
+
+      <!-- Price and Stock Quantity Fields -->
+      <div class="flex gap-6">
+        <!-- Price Field -->
+        <div class="flex-1">
+          <label for="price" class="block text-gray-700 font-medium mb-2">Price</label>
+          <input
+            type="text"
+            id="price"
+            formControlName="price"
             class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
-          >
-            <option value="" disabled>Select a category</option>
-            <option *ngFor="let category of listOfCategories" [value]="category.categoryId">
-              {{ category.categoryName }}
-            </option>
-          </select>
+            placeholder="Enter product price"
+          />
           <div
-            *ngIf="productForm.controls['categoryId'].invalid && productForm.controls['categoryId'].dirty"
+            *ngIf="productForm.controls['price'].invalid && productForm.controls['price'].dirty"
             class="text-red-500 text-sm mt-1"
           >
-            Category is required.
+            Price is required and must be a valid number.
           </div>
         </div>
-      </div>
 
-      <!-- Name Field -->
-      <div>
-        <label for="name" class="block text-gray-700 font-medium mb-2">Product Name</label>
-        <input
-          type="text"
-          id="name"
-          formControlName="name"
-          class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-300"
-          placeholder="Enter product name"
-        />
-      </div>
-
-      <!-- Price Field -->
-      <div>
-        <label for="price" class="block text-gray-700 font-medium mb-2">Price</label>
-        <input
-          type="text"
-          id="price"
-          formControlName="price"
-          class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-300"
-          placeholder="Enter product price"
-        />
-        <div
-          *ngIf="productForm.controls['price'].invalid && productForm.controls['price'].dirty"
-          class="text-red-500 text-sm mt-1"
-        >
-          Price is required and must be a valid number.
-        </div>
-      </div>
-
-      <!-- Stock Quantity Field -->
-      <div>
-        <label for="stockQuantity" class="block text-gray-700 font-medium mb-2">Stock Quantity</label>
-        <input
-          type="number"
-          id="stock"
-          formControlName="stock"
-          class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-300"
-          placeholder="Enter stock quantity"
-        />
-        <div
-          *ngIf="productForm.controls['stock'].invalid && productForm.controls['stock'].dirty"
-          class="text-red-500 text-sm mt-1"
-        >
-          Stock quantity is required and must be a valid number.
+        <!-- Stock Quantity Field -->
+        <div class="flex-1">
+          <label for="stockQuantity" class="block text-gray-700 font-medium mb-2">Stock Quantity</label>
+          <input
+            type="number"
+            id="stock"
+            formControlName="stock"
+            class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg text-gray-700 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-200 transition-all duration-300"
+            placeholder="Enter stock quantity"
+          />
+          <div
+            *ngIf="productForm.controls['stock'].invalid && productForm.controls['stock'].dirty"
+            class="text-red-500 text-sm mt-1"
+          >
+            Stock quantity is required and must be a valid number.
+          </div>
         </div>
       </div>
 
@@ -99,7 +104,7 @@
         />
         <div class="mt-4 flex justify-center items-center">
           <div
-            class="w-48 h-48 bg-gray-100 border-2 border-dashed border-gray-300 rounded-lg flex justify-center items-center overflow-hidden transition-all duration-300 hover:border-purple-500"
+            class="w-64 h-64 bg-gray-100 border-2 border-dashed border-gray-300 rounded-full flex justify-center items-center overflow-hidden transition-all duration-300 hover:border-purple-500"
           >
             <img
               *ngIf="imagePreview"

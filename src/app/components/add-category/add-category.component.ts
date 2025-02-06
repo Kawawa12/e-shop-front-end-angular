@@ -9,19 +9,22 @@ import { NgxPaginationModule } from 'ngx-pagination';
 @Component({
   selector: 'app-add-category',
   standalone: true,
-  imports: [CommonModule, FormsModule,NgxPaginationModule],
+  imports: [CommonModule, FormsModule, NgxPaginationModule],
   templateUrl: './add-category.component.html',
   styleUrl: './add-category.component.css',
 })
 export class AddCategoryComponent implements OnInit {
-deleteCategory(_t34: number) {
-throw new Error('Method not implemented.');
-}
-editCategory(_t34: number) {
-throw new Error('Method not implemented.');
-}
-  
-  categories:  Category[] = []; // Update type as needed
+
+  isSubmitting = false;
+
+  deleteCategory(_t34: number) {
+     
+  }
+  editCategory(_t34: number) {
+    
+  }
+
+  categories: Category[] = []; // Update type as needed
 
   category = { categoryName: '' }; // Model for the form
 
@@ -32,25 +35,47 @@ throw new Error('Method not implemented.');
   pageSize: number = 5; // Number of categories per page
   searchQuery: string = ''; // Search query for filtering
 
-
   ngOnInit(): void {
-    this.adminService.getCategories().subscribe((data: Category[]) => {
-      this.categories = data;
-      this.filteredCategories = [...this.categories]; // Initialize filtered categories
+    this.loadCategories();
+  }
+
+  loadCategories() {
+    this.isSubmitting = true;
+    this.adminService.getCategories().subscribe({
+      next: (data: Category[]) => {
+        this.categories = data;
+        this.filteredCategories = [...this.categories];
+        this.isSubmitting = false;
+      },
+      error: (error) => {
+        Swal.fire({
+          title: 'Error!',
+          icon: 'error',
+          text: `Error fetching categories or network error! ${error}`,
+          confirmButtonText: 'Ok',
+          confirmButtonColor: '#3085d6'
+        })
+        this.isSubmitting = false;
+      },
+      complete: () => {
+        this.isSubmitting = false;
+      }
     });
+    
   }
 
   // Filter categories based on the search query
   filterCategories(): void {
     if (this.searchQuery) {
       this.filteredCategories = this.categories.filter((category) =>
-        category.categoryName.toLowerCase().includes(this.searchQuery.toLowerCase())
+        category.categoryName
+          .toLowerCase()
+          .includes(this.searchQuery.toLowerCase())
       );
     } else {
       this.filteredCategories = [...this.categories];
     }
   }
-
 
   addCategory() {
     if (this.category.categoryName.trim()) {
@@ -67,7 +92,7 @@ throw new Error('Method not implemented.');
           });
 
           // Reset the form field
-          this.category.categoryName = ''
+          this.category.categoryName = '';
         },
         (error) => {
           console.error('Error:', error);

@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { Category, CustomerOrderRespDto, Product, StockResponseDto } from '../model';
+import { AdminRespDto, Category, CustomerOrderRespDto, Product, StockResponseDto } from '../model';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,22 @@ export class AdminService {
     
     return this.http.post(url, null, { params });
   }
+
+  getAdminProfileDetails(id: any): Observable<AdminRespDto>{
+    const url = `${this.BASE_URL}/admin/${id}`;
+    return this.http.get<AdminRespDto>(url);
+  }
+
+  getProfileImage(id: any): Observable<string> {
+    const url = `${this.BASE_URL}/admin-img/${id}`;
+    return this.http.get(url, { responseType: 'text' }); // Set responseType to 'text'
+  }
   
+  updateAdmnImg(id: any, image: FormData): Observable<String> {
+    const url = `${this.BASE_URL}/update-admin-img/${id}`;  // Correct URL with id
+    return this.http.put(url, image, { responseType: 'text' });  // Ensure you use the full URL
+ }
+ 
 
   getCategories():Observable<Category[]>{
     const url = `${this.BASE_URL}/categories`;

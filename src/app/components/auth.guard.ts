@@ -12,8 +12,8 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   if (role === expectedRole) {
     return true; // Allow access
-  } else if (role === 'USER') {
-    router.navigate(['/place-order']); // Redirect USER to the place order page
+  } else if (role === 'MANAGER') {
+    router.navigate(['/manager']); // Redirect USER to the place order page
   } else {
     router.navigate(['/home']); // Redirect others to the home page
   }

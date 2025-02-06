@@ -6,19 +6,26 @@
     'bg-transparent': !isHeaderSolid
   }"
 >
-  <div class="w-full mx-auto px-6 py-6 flex justify-between items-center">
+  <div class="w-full mx-auto px-6 py-8 flex justify-between items-center">
+    <!-- Increased padding to increase height -->
     <!-- Logo -->
-    <div class="text-2xl font-bold text-gray-600 hidden lg:block">
-      <a href="#" class="hover:text-blue-600 transition-colors duration-300"
-        >Rambo Shop</a
-      >
+    <div
+      [ngClass]="{
+        'text-white text-5xl font-mono font-semibold': !isHeaderSolid,
+        'text-gray-700 text-5xl font-mono font-semibold': isHeaderSolid
+      }"
+    >
+      Rambo Shop
     </div>
 
     <!-- Hamburger Menu (Visible on Small Screens) -->
     <div class="sm:hidden relative">
       <button
         (click)="toggleDropdown()"
-        class="text-gray-700 hover:text-blue-600"
+        [ngClass]="{
+          'text-white': !isHeaderSolid,
+          'text-gray-700': isHeaderSolid
+        }"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -41,22 +48,38 @@
     <nav class="hidden sm:flex items-center space-x-6 ml-auto mr-5">
       <a
         href="#"
-        class="text-gray-700 hover:text-blue-600 transition-colors duration-300"
+        [ngClass]="{
+          'text-white hover:text-blue-600': !isHeaderSolid,
+          'text-gray-700 hover:text-blue-600': isHeaderSolid
+        }"
+        class="transition-colors duration-300"
         >Home</a
       >
       <a
         href="#"
-        class="text-gray-700 hover:text-blue-600 transition-colors duration-300"
+        [ngClass]="{
+          'text-white hover:text-blue-600': !isHeaderSolid,
+          'text-gray-700 hover:text-blue-600': isHeaderSolid
+        }"
+        class="transition-colors duration-300"
         >Shop</a
       >
       <a
         href="#"
-        class="text-gray-700 hover:text-blue-600 transition-colors duration-300"
+        [ngClass]="{
+          'text-white hover:text-blue-600': !isHeaderSolid,
+          'text-gray-700 hover:text-blue-600': isHeaderSolid
+        }"
+        class="transition-colors duration-300"
         >About</a
       >
       <a
         href="#"
-        class="text-gray-700 hover:text-blue-600 transition-colors duration-300"
+        [ngClass]="{
+          'text-white hover:text-blue-600': !isHeaderSolid,
+          'text-gray-700 hover:text-blue-600': isHeaderSolid
+        }"
+        class="transition-colors duration-300"
         >Contact</a
       >
     </nav>
@@ -65,7 +88,11 @@
     <div class="flex items-center space-x-6">
       <button
         (click)="openCart()"
-        class="relative text-gray-700 hover:text-blue-600 transition-colors duration-300"
+        [ngClass]="{
+          'text-white hover:text-blue-600': !isHeaderSolid,
+          'text-gray-700 hover:text-blue-600': isHeaderSolid
+        }"
+        class="relative transition-colors duration-300"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -110,7 +137,7 @@
           Sign Up
         </button>
       </ng-container>
-    
+
       <ng-template #loggedInTemplate>
         <button
           (click)="logout()"
@@ -184,7 +211,7 @@
 
 <!-- Hero Section -->
 <section
-  class="relative mt-0 h-[400px] sm:h-[500px] md:h-[600px] lg:h-[700px] overflow-hidden"
+  class="relative mt-0 h-[600px] sm:h-[700px] md:h-[800px] lg:h-[900px] overflow-hidden"
 >
   <!-- Background Image -->
   <img
@@ -211,6 +238,52 @@
     </a>
   </div>
 </section>
+
+<div class="w-full flex flex-wrap justify-center gap-8 py-32">
+  <!-- Card 1 -->
+  <div class="relative w-96 h-auto  rounded-lg overflow-hidden">
+    <img src="/images/gaming_products.avif" alt="Product 1" class="absolute inset-0 w-full h-full object-cover">
+    <div class="absolute inset-0 bg-white bg-opacity-20"></div> <!-- Light Overlay -->
+    <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-4">
+      <h3 class="text-xl font-bold drop-shadow-lg">Get and enjoy the Best Gaming Products</h3>
+      <p class="text-sm drop-shadow-md">Best quality product.</p>
+      <p class="text-sm drop-shadow-md">Enjoy your new Modern real World life</p>
+    </div>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="relative w-96 h-80  rounded-lg overflow-hidden">
+    <img src="/images/products.avif" alt="Product 2" class="absolute inset-0 w-full h-full object-cover">
+    <div class="absolute inset-0 bg-white bg-opacity-20"></div>
+    <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-4">
+      <h3 class="text-xl font-bold drop-shadow-lg">Various Products are Available on Rambo Shops Go with Real new World Life</h3>
+      <p class="text-sm drop-shadow-md">Best and Quality with a very minimal price</p>
+    </div>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="relative w-96 h-80  rounded-lg overflow-hidden">
+    <img src="/images/good_quality.avif" alt="Product 3" class="absolute inset-0 w-full h-full object-cover">
+    <div class="absolute inset-0 bg-white bg-opacity-20"></div>
+    <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-4">
+      <h3 class="text-xl font-bold drop-shadow-lg">Come close to Rambo shop to get a variety of Products</h3>
+      <p class="text-sm drop-shadow-md">Make Order faster and get price reduction as you order frequently</p>
+    </div>
+  </div>
+
+  <!-- Card 4 -->
+  <div class="relative w-96 h-auto rounded-lg overflow-hidden">
+    <img src="/images/get_best.jpg" alt="Product 4" class="absolute inset-0 w-full h-full object-cover">
+    <div class="absolute inset-0 bg-white bg-opacity-20"></div>
+    <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-4">
+      <h3 class="text-xl font-bold drop-shadow-lg">Good and Reliable Products</h3>
+      <p class="text-sm drop-shadow-md">Elegant & durable.</p>
+    </div>
+  </div>
+</div>
+
+
+
 
 <!-- Category and Search Bar Section -->
 <section class="container mx-auto px-6 py-6">

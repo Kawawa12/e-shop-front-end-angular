@@ -54,7 +54,10 @@ export class SignInComponent implements OnInit {
             this.openUserWelcomeModal();
           } else if (role === 'ADMIN') {
             this.authService.goToAdmin();
-          } else {
+          } else if (role === 'MANAGER') {
+            this.authService.goToManager();
+          }
+          else {
             Swal.fire({
               title: 'Invalid!',
               icon: 'error',

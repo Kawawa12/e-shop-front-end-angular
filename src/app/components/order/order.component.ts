@@ -28,7 +28,6 @@ import Swal from 'sweetalert2';
   templateUrl: './order.component.html',
   styleUrl: './order.component.css',
 })
-  
 export class OrderComponent implements OnInit {
   confOrderId!: number;
   cancelOrderId!: number;
@@ -55,70 +54,140 @@ export class OrderComponent implements OnInit {
   }
 
   allOrders(): void {
-    this.adminServices.getAllOrders().subscribe({
-      next: (orders) => {
-        this.dataSource.data = orders;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      },
-      error: (error) => {
-        console.error('Error fetching orders:', error);
-      },
-    });
+    this.isSubmitting = true;
+
+    setTimeout(() => {
+      this.adminServices.getAllOrders().subscribe({
+        next: (orders) => {
+          this.dataSource.data = orders;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        },
+        error: (error) => {
+          console.error('Error! or Network failure on fetching orders:', error);
+          this.isSubmitting = false;
+        },
+        complete: () => {
+          this.isSubmitting = false;
+        },
+      });
+    }, 1000);
   }
 
   newOrders() {
-    this.adminServices.getNewOrders().subscribe({
-      next: (orders) => {
-        this.dataSource.data = orders;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      },
-      error: (error) => {
-        console.error('Error fetching orders:', error);
-      },
-    });
+    this.isSubmitting = true;
+
+    setTimeout(() => {
+      this.adminServices.getNewOrders().subscribe({
+        next: (orders) => {
+          this.dataSource.data = orders;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        },
+        error: (error) => {
+          Swal.fire({
+            title: 'Error!',
+            icon: 'error',
+            text: `Error! or network failure on fetching new orders`,
+            showCancelButton: false,
+            cancelButtonText: 'Ok',
+            cancelButtonColor: '#3085b6',
+          });
+           
+          this.isSubmitting = false;
+        },
+        complete: () => {
+          this.isSubmitting = false;
+        },
+      });
+    }, 1000);
   }
 
   confOrders() {
-    this.adminServices.getConfirmedOrders().subscribe({
-      next: (orders) => {
-        this.dataSource.data = orders;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      },
-      error: (error) => {
-        console.error('Error fetching orders:', error);
-      },
-    });
+    this.isSubmitting = true;
+
+    setTimeout(() => {
+      this.adminServices.getConfirmedOrders().subscribe({
+        next: (orders) => {
+          this.dataSource.data = orders;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        },
+        error: (error) => {
+          Swal.fire({
+            title: 'Error!',
+            icon: 'error',
+            text: `Error! or network failure on fetching confirmed orders`,
+            showCancelButton: false,
+            cancelButtonText: 'Ok',
+            cancelButtonColor: '#3085b6',
+          });
+           
+          this.isSubmitting = false;
+        },
+        complete: () => {
+          this.isSubmitting = false;
+        },
+      });
+    }, 1000);
   }
 
   completedOrders() {
-    this.adminServices.getCompletedOrders().subscribe({
-      next: (orders) => {
-        this.dataSource.data = orders;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      },
-      error: (error) => {
-        console.error('Error fetching orders:', error);
-      },
-    });
+    this.isSubmitting = true;
+
+    setTimeout(() => {
+      this.adminServices.getCompletedOrders().subscribe({
+        next: (orders) => {
+          this.dataSource.data = orders;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        },
+        error: (error) => {
+          Swal.fire({
+            title: 'Error!',
+            icon: 'error',
+            text: `Error fetching completed orders or network errors!`,
+            showCancelButton: false,
+            cancelButtonText: 'Ok',
+            cancelButtonColor: '#3085b6',
+          });
+          this.isSubmitting = false;
+        },
+        complete: () => {
+          this.isSubmitting = false;
+        },
+      });
+    }, 1000);
   }
 
   cancelOrdes() {
-    this.adminServices.getCanceledOrders().subscribe({
-      next: (orders) => {
-        this.dataSource.data = orders;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      },
-      error: (error) => {
-        console.error('Error fetching orders:', error);
-      },
-    });
-  }
+    this.isSubmitting = true;
 
+    setTimeout(() => {
+      this.adminServices.getCanceledOrders().subscribe({
+        next: (orders) => {
+          this.dataSource.data = orders;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        },
+        error: (error) => {
+          Swal.fire({
+            title: 'Error!',
+            icon: 'error',
+            text: `Error fetching canceled orders or network errors!`,
+            showCancelButton: false,
+            cancelButtonText: 'Ok',
+            cancelButtonColor: '#3085b6',
+          });
+          // console.error('Error fetching products:', error);
+          this.isSubmitting = false;
+        },
+        complete: () => {
+          this.isSubmitting = false;
+        },
+      });
+    }, 1000);
+  }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -135,11 +204,11 @@ export class OrderComponent implements OnInit {
   }
 
   viewOrder(order: CustomerOrderRespDto) {
-    this.customerId = order.userId;  
+    this.customerId = order.userId;
     // Calculate responsive width based on screen size
     const screenWidth = window.innerWidth;
     let dialogWidth = '70%'; // Default width for larger screens
-  
+
     if (screenWidth < 600) {
       // For small screens (e.g., mobile)
       dialogWidth = '85%';
@@ -147,11 +216,11 @@ export class OrderComponent implements OnInit {
       // For medium screens (e.g., tablets)
       dialogWidth = '65%';
     }
-  
+
     const dialogRef = this.dialog.open(ViewOrderComponent, {
       position: { top: '50px' },
-      width: dialogWidth,  
-      maxWidth: '1100px',  
+      width: dialogWidth,
+      maxWidth: '1100px',
       data: order,
     });
   }
@@ -170,34 +239,37 @@ export class OrderComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.isSubmitting = true; // Set before making the API call
-        
+
         // Proceed with completing the order
         this.adminServices.completeOrder(order.userId, order.id).subscribe({
-          next:(resp) => {
-             
+          next: (resp) => {
             Swal.fire({
-              icon: resp === 'Order Successful marked as complete.' ? 'success' : 'info',
-              title: resp === 'Sorry!, canceled order can not mark as complete.' ? 'Order Canceled!' : 'Information',
+              icon:
+                resp === 'Order Successful marked as complete.'
+                  ? 'success'
+                  : 'info',
+              title:
+                resp === 'Sorry!, canceled order can not mark as complete.'
+                  ? 'Order Canceled!'
+                  : 'Information',
               text: resp,
               confirmButtonText: 'OK',
             });
-          
-        },
-        error: (error) => {       
-          Swal.fire({
-            icon: 'error',
-            title: 'Error!',
-            text: 'An error occurred while processing your request.',
-            confirmButtonText: 'OK',
-          });
-        },
+          },
+          error: (error) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error!',
+              text: 'An error occurred while processing your request.',
+              confirmButtonText: 'OK',
+            });
+            this.isSubmitting = false;
+          },
           complete: () => {
             this.isSubmitting = false;
-        }
+          },
         });
       }
     });
   }
-  
-
 }

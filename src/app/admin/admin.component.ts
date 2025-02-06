@@ -34,12 +34,33 @@ export class AdminComponent implements OnInit {
   }
 
   fetchProducts(): void {
-    this.adminService.getActiveProducts().subscribe((data:Product[])=> {
-      this.products = data; // Assign fetched data to products array
-      this.filteredProducts = data; // Initialize filteredProducts with fetched data
-      this.isActiveProductsDisplaying = true;
-    });
+    this.isSubmitting = true;
+  
+    setTimeout(() => {
+      this.adminService.getActiveProducts().subscribe({
+        next: (data: Product[]) => {
+          this.products = data;  
+          this.filteredProducts = data; // Initialize filteredProducts with fetched data
+          this.isActiveProductsDisplaying = true;
+          this.isSubmitting = false;  
+        },
+        error: (error) => {
+          Swal.fire({
+            title: 'Error!',
+            icon: 'error',
+            text: `Error fetching products due to server! or netwok failure!`,
+            showCancelButton: false,
+            cancelButtonText: 'Ok',
+            cancelButtonColor: '#3085b6'
+          })
+          // console.error('Error fetching products:', error);
+          this.isSubmitting = false;  
+        }
+      });
+    }, 1000); // 1-second delay before calling API
   }
+  
+  
 
   onSearch(): void {
     this.filteredProducts = this.products.filter((product) =>
@@ -81,53 +102,59 @@ export class AdminComponent implements OnInit {
   activeProducts() {
     this.isSubmitting = true; // Set loading state to true
   
-    this.adminService.getActiveProducts().subscribe({
-      next: (response) => {
-        // Update both products and filteredProducts arrays
-        this.products = response;
-        this.filteredProducts = response; // Update filteredProducts
-        this.isActiveProductsDisplaying = true;
-      },
-      error: (error) => {
-        // Handle the error
-        console.error('Failed to fetch active products:', error);
-        Swal.fire({
-          title: 'Error!',
-          icon: 'error',
-          text: 'Failed to fetch active products. Please try again.',
-          confirmButtonColor: '#3085d6'
-        });
-      },
-      complete: () => {
-        this.isSubmitting = false; // Reset loading state
-      }
-    });
+    setTimeout(() => {
+      this.adminService.getActiveProducts().subscribe({
+        next: (response) => {
+          // Update both products and filteredProducts arrays
+          this.products = response;
+          this.filteredProducts = response; // Update filteredProducts
+          this.isActiveProductsDisplaying = true;
+        },
+        error: (error) => {
+          // Handle the error
+          console.error('Failed to fetch active products:', error);
+          Swal.fire({
+            title: 'Error!',
+            icon: 'error',
+            text: 'Failed to fetch active products. Please try again.',
+            confirmButtonColor: '#3085d6'
+          });
+          this.isSubmitting = false;
+        },
+        complete: () => {
+          this.isSubmitting = false; // Reset loading state
+        }
+      });
+    },1000)
   }
   
   inActiveProducts() {
     this.isSubmitting = true; // Set loading state to true
   
-    this.adminService.getDeactivatedProducts().subscribe({
-      next: (response) => {
-        // Update both products and filteredProducts arrays
-        this.products = response;
-        this.filteredProducts = response; // Update filteredProducts
-        this.isActiveProductsDisplaying = false;
-      },
-      error: (error) => {
-        // Handle the error
-        console.error('Failed to fetch inactive products:', error);
-        Swal.fire({
-          title: 'Error!',
-          icon: 'error',
-          text: 'Failed to fetch inactive products. Please try again.',
-          confirmButtonColor: '#3085d6'
-        });
-      },
-      complete: () => {
-        this.isSubmitting = false; // Reset loading state
-      }
-    });
+    setTimeout(() => {
+      this.adminService.getDeactivatedProducts().subscribe({
+        next: (response) => {
+          // Update both products and filteredProducts arrays
+          this.products = response;
+          this.filteredProducts = response; // Update filteredProducts
+          this.isActiveProductsDisplaying = false;
+        },
+        error: (error) => {
+          // Handle the error
+          console.error('Failed to fetch inactive products:', error);
+          Swal.fire({
+            title: 'Error!',
+            icon: 'error',
+            text: 'Failed to fetch inactive products. Please try again.',
+            confirmButtonColor: '#3085d6'
+          });
+          this.isSubmitting = false;
+        },
+        complete: () => {
+          this.isSubmitting = false; // Reset loading state
+        }
+      });
+    },1000)
   }
 
 

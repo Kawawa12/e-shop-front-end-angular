@@ -1,0 +1,125 @@
+<div class="flex h-screen">
+    <!-- Sidebar -->
+    <div
+      class="fixed inset-y-0 left-0 z-30 w-64 bg-gray-800 rounded-tr-2xl text-white transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:block"
+      [class.-translate-x-full]="!isSidebarOpen" [class.translate-x-0]="isSidebarOpen">
+      <div class="flex items-center justify-between rounded-tr-2xl py-7 px-4 text-xl font-semibold bg-blue-600">
+        <span>Shop</span>
+        <button class="lg:hidden" (click)="closeSidebar()">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <nav class="p-4 space-y-2">
+        <div class="text-gray-500 text-lg p-2 ">MENU</div>
+        <ul class="space-y-2">
+          <li>
+            <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded"
+              [routerLink]="['/manager/dashboard']" routerLinkActive="bg-gray-700 text-white">
+              <!-- Dashboard Icon -->
+              <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd"
+                  d="M11.293 3.293a1 1 0 0 1 1.414 0l6 6 2 2a1 1 0 0 1-1.414 1.414L19 12.414V19a2 2 0 0 1-2 2h-3a1 1 0 0 1-1-1v-3h-2v3a1 1 0 0 1-1 1H7a2 2 0 0 1-2-2v-6.586l-.293.293a1 1 0 0 1-1.414-1.414l2-2 6-6Z"
+                  clip-rule="evenodd" />
+              </svg>
+  
+              <span class="text-lg  text-gray-400">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded"
+              [routerLink]="['/manager/manage-admin']" routerLinkActive="bg-gray-700 text-white">
+              <!-- Products Icon -->
+              <svg class="w-6 h-6 text-gray-400 transition duration-75"  aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M12 6a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm-1.5 8a4 4 0 0 0-4 4 2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-3Zm6.82-3.096a5.51 5.51 0 0 0-2.797-6.293 3.5 3.5 0 1 1 2.796 6.292ZM19.5 18h.5a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-1.1a5.503 5.503 0 0 1-.471.762A5.998 5.998 0 0 1 19.5 18ZM4 7.5a3.5 3.5 0 0 1 5.477-2.889 5.5 5.5 0 0 0-2.796 6.293A3.501 3.501 0 0 1 4 7.5ZM7.1 12H6a4 4 0 0 0-4 4 2 2 0 0 0 2 2h.5a5.998 5.998 0 0 1 3.071-5.238A5.505 5.505 0 0 1 7.1 12Z" clip-rule="evenodd"/>
+              </svg>                        
+              <span class="text-lg text-gray-400">Manage Admins</span>
+            </a>
+          </li>
+          <li>
+            <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded"
+              [routerLink]="['/manager/management']" routerLinkActive="bg-gray-700 text-white">
+              <!-- Category Icon -->
+              <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" d="M12 6.03v13m0-13c-2.819-.831-4.715-1.076-8.029-1.023A.99.99 0 0 0 3 6v11c0 .563.466 1.014 1.03 1.007 3.122-.043 5.018.212 7.97 1.023m0-13c2.819-.831 4.715-1.076 8.029-1.023A.99.99 0 0 1 21 6v11c0 .563-.466 1.014-1.03 1.007-3.122-.043-5.018.212-7.97 1.023"/>
+              </svg>
+              <span class="text-lg text-gray-400">Other Managements</span>
+            </a>
+          </li>
+           
+  
+          <li>
+            <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded"
+              [routerLink]="['/manager/analysis']" routerLinkActive="bg-gray-700 text-white">
+              <!-- Analytics icon -->
+              <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+                <path
+                  d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
+                <path
+                  d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
+              </svg>
+              <span class="text-lg text-gray-400">Analytics</span>
+            </a>
+          </li>
+          <div class="text-gray-500 text-lg p-2">OTHERS</div>
+          <li>
+            <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded"
+            [routerLink]="['/manager/comments']" routerLinkActive="bg-gray-700 text-white">
+            
+              <!-- Comments icon -->
+              
+              <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M7.556 8.5h8m-8 3.5H12m7.111-7H4.89a.896.896 0 0 0-.629.256.868.868 0 0 0-.26.619v9.25c0 .232.094.455.26.619A.896.896 0 0 0 4.89 16H9l3 4 3-4h4.111a.896.896 0 0 0 .629-.256.868.868 0 0 0 .26-.619v-9.25a.868.868 0 0 0-.26-.619.896.896 0 0 0-.63-.256Z" />
+              </svg>
+  
+              <span class="text-lg text-gray-400">Comments</span>
+            </a>
+          </li>
+          <li>
+            <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded" 
+            [routerLink]="['/manager/profile']" routerLinkActive="bg-gray-700 text-white">
+              <!-- Profile icon -->
+              <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z" clip-rule="evenodd"/>
+              </svg>            
+              <span class="text-lg text-gray-400">Profile</span>
+            </a>
+          </li>
+          <li>
+            <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded" (click)="logout()">
+              <!-- Logout Icon -->
+              <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 16">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M1 8h11m0 0L8 4m4 4-4 4m4-11h3a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-3" />
+              </svg>
+              <span class="text-lg text-gray-400">Logout</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col overflow-x-auto">
+      <header class="flex items-center justify-between px-4 h-20 bg-white shadow">
+        <button class="lg:hidden" (click)="toggleSidebar()">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+        </button>
+        <h1 class="text-lg font-semibold hidden lg:block">Dashboard</h1>
+        <span class="text-gray-700">John Jackson</span>
+      </header>
+      <main class="flex-1 overflow-y-auto p-2 bg-gray-100">
+        <router-outlet />
+      </main>
+    </div>
+  </div>

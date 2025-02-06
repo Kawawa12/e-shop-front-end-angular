@@ -1,64 +1,64 @@
-<div class="flex flex-col justify-center items-center min-h-[780px] bg-gray-100 p-6">
-    <div class="bg-white shadow-xl rounded-2xl p-6 max-w-4xl w-full">
+<div class="flex flex-col justify-center items-center min-h-[720px] bg-gray-100 p-6">
+    <div class="bg-white shadow-xl rounded-2xl p-4 max-w-4xl w-full">
       <!-- Profile Picture -->
-      <div class="flex flex-col items-center">
-        <img
-          [src]="'assets/default-avatar.png'"
-          alt="Profile"
-          class="w-36 h-36 rounded-full border-4 border-blue-500"
-        />
-        <h2 class="text-2xl font-semibold mt-4">Works as Admin</h2>
-        <p class="text-lg text-gray-600">Rambo Shop</p>
+      
+      <div class="flex-1 flex flex-col md:flex-row">
+        <!-- Left Container (Larger Width) -->
+        <div class="flex-[2] p-2">
+          <h1 class="text-3xl text-gray-600 my-2 font-semibold">My Profile</h1>
+          <p class="text-gray-500 font-mono py-1 text-lg">Created By Rambo Shop Manager: {{ profileData.createdByManager }}</p>
+          <p class="text-gray-500 font-mono py-1 text-lg">Date Created: {{ profileData.dateCreated | date:'medium' }}</p>
+          <p class="text-gray-500 font-mono text-lg">Manager Contacts</p>
+          <p class="text-gray-500 font-mono py-1 text-lg">Via Mobile: {{ profileData.managerPhone }}</p>
+          <p class="text-gray-500 font-mono py-1 text-lg">via Email: {{ profileData.managerEmail }}</p>
+        </div>
+      
+        <!-- Right Container (Smaller Width) -->
+        <div class="flex-[1] p-2 flex flex-col items-end">
+          <div>
+            <img
+              [src]="imageUrl || 'images/profile_mg.avif'"
+              alt="Profile"
+              class="w-36 h-36 rounded-full border-4 border-gray-300"
+            />
+            <h2 class="text-gray-500 font-mono py-1 text-lg">Works as Admin</h2>
+            <p class="text-lg text-gray-600">At Rambo Shop</p>
+          </div>
+      
+          <div class="flex justify-end items-center mt-2 mb-2">
+            <button (click)="editImageProf()" class="bg-sky-600 py-2 px-6 rounded text-white hover:bg-sky-700 cursor-pointer">
+              Edit image profile
+            </button>
+          </div>
+        </div>
       </div>
+      
+
+      <hr class="border-gray-300" />
   
-      <hr class="my-8 border-gray-300" />
-  
-      <div class="flex justify-between my-10">
+      <div class="flex justify-between px-2 my-10">
         <!-- Profile Details -->
-        <div class="space-y-6 text-lg">
-          <p class="text-gray-800"><strong>Full Name:</strong> John Jacksson</p>
-          <p class="text-gray-800"><strong>Email:</strong> johnjackson-example.com</p>
-          <p class="text-gray-800"><strong>Home Address:</strong> Nyegez Mwanza</p>
-          <p class="text-gray-800"><strong>Phone Number:</strong> 0745-089-674</p>
-          <p class="text-gray-800"><strong>Gender:</strong> Male</p>
+        <div class="space-y-4 text-lg">
+          <h1 class="text-xl font-mono font-semibold text-gray-500">ABOUT ME</h1>
+          <p class="text-gray-500 font-mono py-1 text-lg"><strong>Full Name:</strong>{{ profileData.fullName }}</p>
+          <p class="text-gray-500 font-mono py-1 text-lg"><strong>Email :</strong> {{ profileData.email }}</p>
+          <p class="text-gray-500 font-mono py-1 text-lg"><strong>Home Address :</strong>{{ profileData.address }}</p>
+          <p class="text-gray-500 font-mono py-1 text-lg"><strong>Phone Number :</strong> {{ profileData.phone }}</p>
+          <p class="text-gray-500 font-mono py-1 text-lg"><strong>Gender:</strong> {{ profileData.gender }}</p>
         </div>
   
         <!-- Action Buttons (Vertically Aligned) -->
-        <div class="mt-2 flex flex-col space-y-4">
+        <div class="flex flex-col space-y-4">
           <button (click)="updateAdminProfile()"
-          class="bg-blue-600 text-white px-6 py-2 rounded text-lg font-medium hover:bg-blue-700">
+          class="bg-blue-600 text-white px-6 py-2 rounded font-medium hover:bg-blue-700">
             Edit Profile
           </button>
           <button (click)="changePassword()"
-          class="bg-red-600 text-white px-6 py-2 rounded text-lg font-medium hover:bg-red-700">
+          class="bg-red-600 text-white px-6 py-2 rounded font-medium hover:bg-red-700">
             Change Password
           </button>
         </div>
       </div>
     </div>
   </div> 
-   <!-- Attractive Footer -->
-   <footer class="bg-gray-800 text-white py-8 mt-4 rounded">
-    <div class="container mx-auto px-6 text-center">
-      <div class="flex justify-center space-x-6 mb-4">
-        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
-          <i class="fab fa-facebook-f"></i>
-        </a>
-        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
-          <i class="fab fa-twitter"></i>
-        </a>
-        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
-          <i class="fab fa-instagram"></i>
-        </a>
-        <a href="#" class="text-gray-400 hover:text-white transition-colors duration-200">
-          <i class="fab fa-linkedin-in"></i>
-        </a>
-      </div>
-      <p class="text-gray-400 text-sm">
-        &copy;  2023 Rambo Shop. All rights reserved.
-      </p>
-      <p class="text-gray-400 text-sm mt-2">
-        Designed with ❤️ by <a href="#" class="text-blue-500 hover:text-blue-400">Your Team</a>
-      </p>
-    </div>
-  </footer>
+    

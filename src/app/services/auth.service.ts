@@ -49,6 +49,10 @@ export class AuthService {
     this.router.navigate(['/admin']);
   }
 
+  goToManager(){
+    this.router.navigate(['/manager']);
+  }
+
   logoutToHome(){
     localStorage.clear();
     this.router.navigate(['home']);

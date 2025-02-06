@@ -27,40 +27,53 @@ export interface Category {
   categoryName: string;
 }
 
-
 export interface CustomerOrderDto {
-    id?: number; // Customer ID (to be implemented later)
-    orderItems: {
-      id: number; // Item ID
-      itemName: string;
-      quantity: number;
-      price: number;
-      totalPrice: number;
-    }[];
-    totalAmount: number; // Total amount calculated from total item list
-  }
+  id?: number; // Customer ID (to be implemented later)
+  orderItems: {
+    id: number; // Item ID
+    itemName: string;
+    quantity: number;
+    price: number;
+    totalPrice: number;
+  }[];
+  totalAmount: number; // Total amount calculated from total item list
+}
 
-  export interface CustomerOrderRespDto {
+export interface CustomerOrderRespDto {
+  id: number;
+  userId: number;
+  customerName: string;
+  orderStatus: string;
+  orderDate: Date;
+  cartItems: {
     id: number;
-    userId: number;
-      customerName: string;
-      orderStatus: string,
-      orderDate: Date,
-      cartItems: {
-          id: number,
-          itemName: string,
-          quantity: number,
-          pricePerProduct: number,
-          totalPrice:number,
-      }[],
-      totalAmount:number
-  }
+    itemName: string;
+    quantity: number;
+    pricePerProduct: number;
+    totalPrice: number;
+  }[];
+  totalAmount: number;
+}
 
-export interface StockResponseDto{
-  id?:number,
-  productName: string,
-  stockQuantity: number,
-  dateCreated: Date,
-  dateUpdated: Date,
-  }
-  
+export interface StockResponseDto {
+  id?: number;
+  productName: string;
+  stockQuantity: number;
+  dateCreated: Date;
+  dateUpdated: Date;
+}
+
+export interface AdminRespDto {
+  id: number;
+  fullName: string;
+  email: string;
+  phone: string;
+  address: string;
+  gender: string;
+  yOfBirth: string;
+  dateCreated: Date;
+  dateUpdated: Date;
+  createdByManager: any;
+  managerEmail: string;
+  managerPhone:string
+}
