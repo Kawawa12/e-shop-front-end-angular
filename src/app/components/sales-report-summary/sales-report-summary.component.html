@@ -1,0 +1,52 @@
+<div class="p-6 bg-white shadow-md rounded-lg">
+    <!-- Display sales records -->
+    <div *ngIf="salesRecords.length > 0; else noData">
+      <!-- Last week's sales -->
+      <div class="space-y-6">
+        <h2 class="text-2xl font-bold font-mono text-center mb-4 underline">LAST WEEK'S SALES REPORT</h2>
+        <div *ngFor="let record of salesRecords" class="border-b pb-4">
+          <!-- Display the day name and date -->
+          <h3 class="text-2xl text-center font-mono font-semibold mb-2">
+            {{ getDayName(record.saleDate) }} - {{ record.saleDate }}
+          </h3>
+  
+          <!-- Table for sales data -->
+          <div class="overflow-x-auto">
+            <table class="min-w-full bg-white">
+              <thead>
+                <tr class="bg-gray-100">
+                  <th class="px-6 py-3 text-left text-2xl font-semibold text-gray-700">Product</th>
+                  <th class="px-6 py-3 text-left text-2xl font-semibold text-gray-700">Quantity</th>
+                  <th class="px-6 py-3 text-left text-2xl font-semibold text-gray-700">Price</th>
+                  <th class="px-6 py-3 text-left text-2xl font-semibold text-gray-700">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let product of record.productNames; let i = index"
+                  class="border-b hover:bg-gray-50 transition-colors"
+                >
+                  <td class="px-6 py-4 text-lg text-gray-900">{{ product }}</td>
+                  <td class="px-6 py-4 text-lg text-gray-900">{{ record.quantities[i] }}</td>
+                  <td class="px-6 py-4 text-lg text-gray-900">{{ record.prices[i] }} /=</td>
+                  <td class="px-6 py-4 text-lg text-gray-900">
+                    {{ record.descriptions[i] || 'No description' }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+  
+          <!-- Total amount -->
+          <div class="mt-4 pt-4 text-2xl border-t">
+            <strong>Total Amount:</strong> {{ record.totalAmount}} /=
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- No data message -->
+    <ng-template #noData>
+      <p class="text-red-500 text-center text-2xl">{{ errorMessage || 'No sales records found for the last week.' }}</p>
+    </ng-template>
+  </div>

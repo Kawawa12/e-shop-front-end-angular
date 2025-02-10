@@ -1,81 +1,115 @@
-import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ManagerService } from '../../services/manager.service';
+import { MatTableModule } from '@angular/material/table';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import Swal from 'sweetalert2';
+
+export interface AdminImageDto {
+  profileImg: any;
+  id: number;
+  fullName: string;
+  email: string;
+  phone: string;
+  address: string;
+  gender: string;
+  yOfBirth: string;
+  byteImage: string;
+  status: boolean; // Track admin's status
+  isLoading: boolean; // Track loading state
+}
 
 @Component({
   selector: 'app-manage-admins',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, MatTableModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule],
   templateUrl: './manage-admins.component.html',
-  styleUrl: './manage-admins.component.css'
+  styleUrls: ['./manage-admins.component.css'],
 })
-export class ManageAdminsComponent {
+export class ManageAdminsComponent implements OnInit {
+  displayedColumns: string[] = ['profileImage', 'fullName', 'email', 'homeAddress', 'phone', 'actions'];
+  dataSource: AdminImageDto[] = [];
+  filteredDataSource: AdminImageDto[] = [];
 
-  adminForm: FormGroup;
-  selectedFile: File | null = null;
-  imagePreview: string | ArrayBuffer | null = null;
+  constructor(private managerService: ManagerService) {}
 
-  constructor(private fb: FormBuilder, private managerService: ManagerService) {
-    this.adminForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-      phone: ['', Validators.required],
-      yOfBirth: ['', Validators.required],
-      address: ['', Validators.required],
-      gender: ['', Validators.required],
-    });
+  ngOnInit(): void {
+    this.getAllAdmins();
   }
 
-  ngOnInit(): void {}
-
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
-
-      // Generate image preview
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imagePreview = reader.result;
-      };
-      reader.readAsDataURL(this.selectedFile);
-    }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
+    this.filteredDataSource = this.dataSource.filter(
+      (admin) =>
+        admin.fullName.toLowerCase().includes(filterValue) ||
+        admin.email.toLowerCase().includes(filterValue) ||
+        admin.phone.toLowerCase().includes(filterValue)
+    );
   }
 
-  onSubmit(): void {
-    
-    if (this.adminForm.invalid || !this.selectedFile) {
-      alert('Please fill all fields and select an image');
-      return;
-    }
-
-    
-    const formData = new FormData();
-
-    const id = localStorage.getItem('id'); // Fetch ID from local storage
-
-    if (id) {
-      formData.append('id', id);
-    }
-
-    Object.keys(this.adminForm.controls).forEach((key) => {
-      formData.append(key, this.adminForm.get(key)?.value);
-    });
-    formData.append('image', this.selectedFile);
-
-    this.managerService.addAdmin(formData).subscribe({
-      next: (response) => {
-        console.log('respone data: ', response);
-        alert('Admin added successfully!');
-        this.adminForm.reset();
-        this.imagePreview = null;  
+  getAllAdmins() {
+    this.managerService.getAdmins().subscribe({
+      next: (res: AdminImageDto[]) => {
+        console.log('Admins:', res);
+        this.dataSource = res.map((admin) => ({
+          ...admin,
+          profileImg: admin.byteImage 
+            ? `data:image/png;base64,${admin.byteImage}` 
+            : 'https://via.placeholder.com/50',
+          isActive: admin.status, // Initialize based on backend response
+          isLoading: false, // Initialize loading state as false
+        }));
+        this.filteredDataSource = this.dataSource;
       },
-      error:(error) => {
-        console.error('Error adding admin:', error);
+      error: (error) => {
+        console.error('Error fetching admins:', error);
+      },
+    });
+  }
+  
+
+  toggleAdminStatus(admin: AdminImageDto) {
+    const action = admin.status ? 'Deactivate' : 'Activate';
+  
+    Swal.fire({
+      title: 'Are you sure?',
+      text: `You are about to ${action.toLowerCase()} ${admin.fullName}.`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: `Yes, ${action} it!`
+    }).then((result) => {
+      if (result.isConfirmed) {
+        admin.isLoading = true; // Show loader
+  
+        this.managerService.changeAdminStatus(admin.id).subscribe({
+          next: (response: string) => {
+            admin.status = !admin.status; // Toggle status based on successful API response
+            admin.isLoading = false; // Hide loader
+            //refresh admin list
+            this.getAllAdmins();
+            Swal.fire(
+              `${action}d!`,
+              response, // Use the backend response message directly
+              'success'
+            );
+          },
+          error: (error) => {
+            admin.isLoading = false; // Hide loader if there's an error
+            console.error('Error updating status:', error);
+  
+            Swal.fire(
+              'Error!',
+              'Something went wrong while updating the status.',
+              'error'
+            );
+          }
+        });
       }
     });
   }
+  
 }

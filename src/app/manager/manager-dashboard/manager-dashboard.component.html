@@ -1,94 +1,228 @@
-<div class="p-6">
-    <!-- Welcome Message -->
-    <div class="mb-8">
-      <h1 class="text-3xl font-bold text-gray-800">Welcome Back, Manager!</h1>
-      <p class="text-gray-600">Here's what's happening in your e-commerce shop today.</p>
-    </div>
+<div class="p-2">
+  <!-- Welcome Message -->
+  <div class="mb-2 p-4 bg-sky-600 rounded flex justify-between">
+   <div>
+    <h1 class="lg:text-4xl md:text-3xl sm:text-xl font-bold font-mono text-white">Rambo Shop,We are the best </h1>
+    <p class="text-white md:text-xl lg:text-2xl">Managements</p>
+   </div>
+   <div>
+      <span class="text-white lg:text-3xl md:text-2xl sm:text-xl font-semibold font-mono">{{ dayName }}</span>
+      <p class="lg:text-2xl md:text-xl sm:text-lg text-white py-2 mr-10">{{ date | date: 'dd-MM-yyyy' }}
+      </p>
+   </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+    <button (click)="addAdmin('2000ms','1000ms')" class="bg-blue-500 text-white p-4 rounded shadow-md hover:bg-blue-600 transition duration-300 flex items-center justify-center">
+      <i class="fas fa-user-plus text-xl mr-2"></i> Add Admin
+    </button>
+    <button class="bg-green-500 text-white p-4 rounded shadow-md hover:bg-green-600 transition duration-300 flex items-center justify-center">
+      <i class="fas fa-shopping-cart text-xl mr-2"></i> View Orders
+    </button>
+    <button (click)="viewDailySales('2000ms', '1000ms') "  class="bg-purple-500 text-white p-4 rounded shadow-md hover:bg-purple-600 transition duration-300 flex items-center justify-center">
+      <i class="fas fa-chart-line text-xl mr-2"></i> View Day Sales Report
+    </button>
+    <button class="bg-gray-500 text-white p-4 rounded shadow-md hover:bg-gray-600 transition duration-300 flex items-center justify-center">
+      <i class="fas fa-exclamation-circle text-xl mr-2"></i> View Weekly Sales Report
+    </button>
+  </div>
+
+  <div class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-50 z-40" *ngIf="isSubmitting">
+    <div class="h-32 w-32 border-8 border-gray-300 border-t-blue-600 rounded-full animate-spin"></div>
+  </div>
   
-    <!-- Quick Actions -->
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-      <button class="bg-blue-500 text-white p-4 rounded-lg shadow-md hover:bg-blue-600 transition duration-300">
-        <i class="fas fa-user-plus mr-2"></i> Add Admin
-      </button>
-      <button class="bg-green-500 text-white p-4 rounded-lg shadow-md hover:bg-green-600 transition duration-300">
-        <i class="fas fa-shopping-cart mr-2"></i> View Orders
-      </button>
-      <button class="bg-purple-500 text-white p-4 rounded-lg shadow-md hover:bg-purple-600 transition duration-300">
-        <i class="fas fa-chart-line mr-2"></i> View Sales Report
-      </button>
-      <button class="bg-red-500 text-white p-4 rounded-lg shadow-md hover:bg-red-600 transition duration-300">
-        <i class="fas fa-exclamation-circle mr-2"></i> Manage Issues
-      </button>
-    </div>
-  
-    <!-- Stats Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-      <div class="bg-gradient-to-r from-blue-400 to-blue-500 p-6 rounded-lg shadow-md text-center text-white hover:shadow-lg transition-shadow duration-300">
-        <h2 class="text-xl font-semibold">Total Admins</h2>
-        <p class="text-3xl font-bold">12</p>
+  <div class="p-2 sm:p-4">
+    <!-- Cards Section (Top 4 Cards) -->
+    <div class="flex flex-wrap justify-between gap-2 mb-4">
+       
+      <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 w-full sm:w-[48%] md:w-[23%] border-l-4 border-purple-500">
+        <div class="flex justify-between">
+        <h2 class="text-lg font-semibold text-gray-700 font-mono">Total Products</h2>
+        <button class="bg-slate-500 text-white rounded-full px-2 py-2">View</button>
       </div>
-      <div class="bg-gradient-to-r from-green-400 to-green-500 p-6 rounded-lg shadow-md text-center text-white hover:shadow-lg transition-shadow duration-300">
-        <h2 class="text-xl font-semibold">Total Customers</h2>
-        <p class="text-3xl font-bold">250</p>
+      <div class="mt-2 text-slate-500 flex justify-start space-x-10 items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+        </svg>
+        <p class="text-2xl font-bold text-gray-900">500</p>
       </div>
-      <div class="bg-gradient-to-r from-purple-400 to-purple-500 p-6 rounded-lg shadow-md text-center text-white hover:shadow-lg transition-shadow duration-300">
-        <h2 class="text-xl font-semibold">New Orders</h2>
-        <p class="text-3xl font-bold">5</p>
-      </div>
-      <div class="bg-gradient-to-r from-yellow-400 to-yellow-500 p-6 rounded-lg shadow-md text-center text-white hover:shadow-lg transition-shadow duration-300">
-        <h2 class="text-xl font-semibold">Total Sales</h2>
-        <p class="text-3xl font-bold">$12,500</p>
-      </div>
-      <div class="bg-gradient-to-r from-pink-400 to-pink-500 p-6 rounded-lg shadow-md text-center text-white hover:shadow-lg transition-shadow duration-300">
-        <h2 class="text-xl font-semibold">Completed Orders</h2>
-        <p class="text-3xl font-bold">250</p>
-      </div>
-      <div class="bg-gradient-to-r from-red-400 to-red-500 p-6 rounded-lg shadow-md text-center text-white hover:shadow-lg transition-shadow duration-300">
-        <h2 class="text-xl font-semibold">Pending Orders</h2>
-        <p class="text-3xl font-bold">5</p>
-      </div>
-    </div>
-  
-    <!-- Sales Chart -->
-    <div class="bg-white p-6 rounded-lg shadow-md mb-8">
-      <h2 class="text-xl font-semibold text-gray-800 mb-4">Sales Overview</h2>
-      <div class="h-64 bg-gray-100 rounded-lg flex items-center justify-center">
-        <!-- Placeholder for Chart -->
-        <p class="text-gray-500">Sales chart will be displayed here.</p>
+      <!-- Progress Cylinder -->
+      <div class="mt-4 h-2 w-full bg-gray-200 rounded-full">
+        <div class="h-2 bg-slate-600 rounded-full" style="width: 70%;"></div>
       </div>
     </div>
   
-    <!-- Recent Activity -->
-    <div class="bg-white p-6 rounded-lg shadow-md">
-      <h2 class="text-xl font-semibold text-gray-800 mb-4">Recent Activity</h2>
-      <ul class="space-y-4">
-        <li class="flex items-center">
-          <div class="bg-green-100 p-3 rounded-full">
-            <i class="fas fa-check-circle text-green-500"></i>
+       
+    <!-- Total Sales Card -->
+  <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 w-full sm:w-[48%] md:w-[23%] border-l-4 border-green-500 relative">
+     
+    <!-- Card Content -->
+    <div class="flex justify-between">
+        <h2 class="text-lg font-semibold text-gray-700 font-mono">Total Customers</h2>
+       <button class="bg-blue-500 text-white rounded-full px-2 py-2">View</button>
+     </div>
+    <div class="mt-2 text-green-500 flex justify-start space-x-10 items-center">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+      </svg>
+      <p class="text-2xl font-bold text-gray-900">500</p>
+    </div>
+   
+  </div>
+  
+      <!-- Total Users Card -->
+      <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 w-full sm:w-[48%] md:w-[23%] border-l-4 border-purple-500">
+       <div class="flex justify-between">
+        <div>
+          <h2 class="text-lg font-semibold font-mono text-gray-700">Active Admins</h2>
+         </div>
+         <button class="bg-blue-500 text-white rounded-full px-2 py-2">View</button>
+       </div>
+        <div class="mt-2 text-purple-500 flex justify-start space-x-8 items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+          <p class="text-2xl font-bold text-gray-900">2</p>
+        </div>
+      </div>
+  
+       <!-- Right-End Side Card -->
+        
+       <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 w-full sm:w-[48%] md:w-[23%] border-l-4 border-purple-500">
+        <div class="flex justify-between">
+            <h2 class="text-lg font-semibold text-gray-700 font-mono">Total Customers</h2>
+            <button class="bg-blue-500 text-white rounded-full px-2 py-2">View</button>
           </div>
-          <div class="ml-4">
-            <p class="text-gray-800">Order #1234 was completed.</p>
-            <p class="text-sm text-gray-500">2 hours ago</p>
+          <div class="mt-2 text-green-500 flex justify-start space-x-10 items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            <p class="text-2xl font-bold text-gray-900">500</p>
           </div>
-        </li>
-        <li class="flex items-center">
-          <div class="bg-blue-100 p-3 rounded-full">
-            <i class="fas fa-user-plus text-blue-500"></i>
+          <!-- Progress Cylinder -->
+          <div class="mt-4 h-2 w-full bg-gray-200 rounded-full">
+            <div class="h-2 bg-green-500 rounded-full" style="width: 70%;"></div>
           </div>
-          <div class="ml-4">
-            <p class="text-gray-800">New admin added: John Doe.</p>
-            <p class="text-sm text-gray-500">5 hours ago</p>
+        </div>
+  
+     
+    </div>
+  
+    <!-- Additional Cards Section (Bottom 2 Cards) -->
+  <div class="flex flex-wrap justify-between gap-2 mb-4">
+     
+    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 w-full sm:w-[48%] md:w-[23%] border-l-4 border-purple-500">
+      <div class="flex justify-between">
+            <h2 class="text-lg font-semibold text-gray-700 font-mono">Total Category</h2>
+            <button class="bg-blue-500 text-white rounded-full px-2 py-2">View</button>
           </div>
-        </li>
-        <li class="flex items-center">
-          <div class="bg-yellow-100 p-3 rounded-full">
-            <i class="fas fa-exclamation-circle text-yellow-500"></i>
+          <div class="mt-2 text-sky-500 flex justify-start space-x-10 items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+            </svg>
+            <p class="text-2xl font-bold text-gray-900">500</p>
           </div>
-          <div class="ml-4">
-            <p class="text-gray-800">Issue reported: Product out of stock.</p>
-            <p class="text-sm text-gray-500">1 day ago</p>
+          <!-- Progress Cylinder -->
+          <div class="mt-4 h-2 w-full bg-gray-200 rounded-full">
+            <div class="h-2 bg-sky-600 rounded-full" style="width: 70%;"></div>
           </div>
-        </li>
-      </ul>
+        </div>
+  
+  
+    <!-- Followed Card (Important for Admin Dashboard) -->
+    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 w-full sm:w-[48%] md:w-[23%] border-l-4 border-purple-500">
+      <h2 class="text-lg font-semibold text-gray-700">Pending Tasks</h2>
+      <p class="text-2xl font-bold text-gray-900">15</p>
+      <div class="mt-2 text-purple-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
+        </svg>
+      </div>
+    </div>
+  
+    <!-- Canceled Orders Card -->
+    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 w-full sm:w-[48%] md:w-[23%] border-l-4 border-red-500">
+      <h2 class="text-lg font-semibold text-gray-700">Canceled Orders</h2>
+      <p class="text-2xl font-bold text-gray-900">10</p>
+      <div class="mt-2 text-red-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </div>
+    </div>
+  
+    <!-- Completed Orders Card -->
+    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 w-full sm:w-[48%] md:w-[23%] border-l-4 border-green-500">
+      <h2 class="text-lg font-semibold text-gray-700">Completed Orders</h2>
+      <p class="text-2xl font-bold text-gray-900">200</p>
+      <div class="mt-2 text-green-500">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
     </div>
   </div>
+  
+  <!-- Containers -->
+  <div class="p-0">
+    <!-- Main Container -->
+    <div class="flex flex-col md:flex-row gap-4">
+      <!-- Left Container (1/3 width) -->
+      <div class="w-full md:w-1/2 flex flex-col gap-4">
+        <!-- Day Sales Summary Card -->
+        <div class="bg-gradient-to-r from-blue-100 to-blue-200 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-blue-500 flex-1">
+          <h2 class="lg:text-3xl md:text-xl font-semibold text-gray-700 mb-4">Day Sales Summary</h2>
+          <div class="space-y-4">
+            <!-- Day and Date -->
+            <div class="flex items-center space-x-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              <p class="lg:text-xl md:text-lg font-semibold text-gray-700">Sunday, October 15, 2023</p>
+            </div>
+            <!-- Total Products Sold -->
+            <div class="flex items-center space-x-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
+              </svg>
+              <p class="text-lg font-semibold text-gray-700">Total Products Sold: <span class="text-blue-500">120</span></p>
+            </div>
+            <!-- Total Amount Earned -->
+            <div class="flex items-center space-x-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <p class="text-lg font-semibold text-gray-700">Total Amount Earned: <span class="text-blue-500">$5,400</span></p>
+            </div>
+            <!-- Status -->
+            <div class="flex items-center space-x-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <p class="text-lg font-semibold text-gray-700">Status: <span class="text-green-500">Completed</span></p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Additional Information Card -->
+        <div class="bg-gradient-to-r from-green-100 to-green-200 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-green-500 flex-1">
+          <h2 class="lg:text-3xl md:text-xl font-semibold text-gray-700 mb-4">Additional Information</h2>
+          <p class="text-lg text-gray-700">More details about sales trends, customer insights, or upcoming reports can go here.</p>
+        </div>
+      </div>
+      
+      <!-- Right Container (2/3 width) -->
+      <div class="w-full md:w-1/2">
+        <!-- Graph Container -->
+        <div class="bg-gradient-to-r from-purple-100 to-purple-200 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 border-l-4 border-purple-500 h-full">
+          <h2 class="lg:text-3xl md:text-2xl font-semibold text-gray-700 mb-4">Weekly Sales Overview</h2>
+          <div class="h-96">
+            <!-- Chart.js Canvas -->
+            <canvas id="salesChart" class="text-lg"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

@@ -16,10 +16,9 @@ import { AnalyticsComponent } from './components/analytics/analytics.component';
 import { StockComponent } from './components/stock/stock.component';
 import { ManagerLayoutComponent } from './manager/manager-layout/manager-layout.component';
 import { ManagerDashboardComponent } from './manager/manager-dashboard/manager-dashboard.component';
-import { ManagementsComponent } from './manager/managements/managements.component';
 import { ManagerProfileComponent } from './manager/manager-profile/manager-profile.component';
 import { ManageAdminsComponent } from './manager/manage-admins/manage-admins.component';
-import { ViewCommentsComponent } from './manager/view-comments/view-comments.component';
+import { SalesReportSummaryComponent } from './components/sales-report-summary/sales-report-summary.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -49,11 +48,11 @@ export const routes: Routes = [
     data: { role: 'MANAGER' },
     children: [
       { path: 'dashboard', component: ManagerDashboardComponent },
-      { path: 'management', component: ManagementsComponent },
+      { path: 'weekly-sales', component: SalesReportSummaryComponent },
       { path: 'profile', component: ManagerProfileComponent },
       { path: 'manage-admin', component: ManageAdminsComponent },
       { path: 'analysis', component: AnalyticsComponent },
-      { path: 'comments', component: ViewCommentsComponent },
+      { path: 'comments', component: CommentsComponent },
     ]
    },
   { path: 'place-order',component: PlaceOrderComponent},

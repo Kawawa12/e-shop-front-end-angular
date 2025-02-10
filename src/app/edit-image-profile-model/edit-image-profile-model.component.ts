@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, Inject } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { AdminService } from '../services/admin.service';
+import { ManagerService } from '../services/manager.service';
 
 @Component({
   selector: 'app-edit-image-profile-model',
@@ -10,6 +11,8 @@ import { AdminService } from '../services/admin.service';
   templateUrl: './edit-image-profile-model.component.html',
   styleUrl: './edit-image-profile-model.component.css',
 })
+  
+  
 export class EditImageProfileModelComponent {
   imageUrl: string | ArrayBuffer | null = null;
   selectedFile: File | null = null;
@@ -18,10 +21,12 @@ export class EditImageProfileModelComponent {
   constructor(
     public dialogRef: MatDialogRef<EditImageProfileModelComponent>,
     @Inject(MAT_DIALOG_DATA) public data: { imageUrl: string },
-    private adminService: AdminService
+    private managerService: ManagerService
   ) {
     this.imageUrl = data.imageUrl;
   }
+
+  @Output() imageUpdated = new EventEmitter<void>() //Event emmiter
 
   id = localStorage.getItem('id');
 
@@ -57,10 +62,10 @@ export class EditImageProfileModelComponent {
     }
      
     console.log('Id :', this.id, ' Image : ', this.selectedFile as File);
-    this.adminService.updateAdmnImg(this.id, formData).subscribe({
+    this.managerService.updateManagerProfImg(this.id, formData).subscribe({
       next: (res) => {
-        console.log('Updated image response:', res);
-      
+        //console.log('Updated image response:', res);
+        this.imageUpdated.emit() //emit an event to notify parent to refresh 
         // Refresh image preview after update
         this.imageUrl = URL.createObjectURL(this.selectedFile as File); // Safe because selectedFile is not null
         

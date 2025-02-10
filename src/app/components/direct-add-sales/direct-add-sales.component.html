@@ -1,0 +1,105 @@
+<div class="container mx-auto p-6 bg-white shadow-lg rounded-lg max-w-md">
+  <!-- Form Header -->
+  <h1 class="text-3xl font-semibold font-mono text-gray-500 mb-4 text-center">
+    Add New Sales Record
+  </h1>
+
+  <!-- Sales Record Form -->
+  <form (ngSubmit)="onSubmit()" class="space-y-4">
+    <!-- Product Name -->
+    <div>
+      <label
+        for="productName"
+        class="block text-lg font-medium text-gray-700 mb-1"
+        >Product Name</label
+      >
+      <input
+        type="text"
+        id="productName"
+        [(ngModel)]="newRecord.productName"
+        name="productName"
+        required
+        class="p-3 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+    <!-- Quantity -->
+    <div>
+      <label for="quantity" class="block text-lg font-medium text-gray-700 mb-1"
+        >Quantity</label
+      >
+      <input
+        type="number"
+        id="quantity"
+        [(ngModel)]="newRecord.quantity"
+        name="quantity"
+        required
+        min="1"
+        (keypress)="onQuantityKeyPress($event)"
+        class="p-3 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+    <!-- Price -->
+    <div>
+      <label for="price" class="block text-lg font-medium text-gray-700 mb-1"
+        >Price</label
+      >
+      <input
+        type="number"
+        id="price"
+        [(ngModel)]="newRecord.price"
+        name="price"
+        required
+        min="0"
+        step="0.01"
+        (keypress)="onPriceKeyPress($event)"
+        class="p-3 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+    <!-- Description (Optional) -->
+    <div>
+      <label
+        for="description"
+        class="block text-lg font-medium text-gray-700 mb-1"
+        >Description (Optional)</label
+      >
+      <textarea
+        id="description"
+        [(ngModel)]="newRecord.description"
+        name="description"
+        (input)="onDescriptionInput($event)"
+        maxlength="250"
+        class="p-4 w-full border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+      ></textarea>
+      <p class="text-sm text-gray-500 mt-1">
+        Words left:
+        {{
+          50 -
+            (newRecord.description
+              ? newRecord.description.split(" ").length
+              : 0)
+        }}
+      </p>
+    </div>
+
+    <!-- Save Button (Disabled if required fields are empty) -->
+    <div class="flex space-x-2 mt-2 text-center">
+      <button type="button" (click)="closeAddSales()" class="text-white bg-red-400 py-2 w-full text-lg rounded">Close</button>
+      <button
+        type="submit"
+        class="px-10 text-lg py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-gray-500 w-full"
+        [disabled]="
+          !newRecord.productName ||
+          !newRecord.quantity ||
+          !newRecord.price ||
+          (newRecord.description &&
+            newRecord.description.split(' ').length > 50)
+        "
+      >
+        Save Record
+      </button>
+    </div>
+  </form>
+</div>

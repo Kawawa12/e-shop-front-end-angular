@@ -17,7 +17,7 @@
       <ul class="space-y-2">
         <li>
           <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded"
-            [routerLink]="['/admin/dashboard']" routerLinkActive="bg-gray-700 text-white">
+            [routerLink]="['/admin/dashboard']" routerLinkActive="bg-gray-700 text-white" (click)="closeSidebar()" >
             <!-- Dashboard Icon -->
             <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
               width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -26,12 +26,12 @@
                 clip-rule="evenodd" />
             </svg>
 
-            <span class="text-lg  text-gray-400">Dashboard</span>
+            <span  class="text-lg  text-gray-400">Dashboard</span>
           </a>
         </li>
         <li>
           <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded"
-            [routerLink]="['/admin/product']" routerLinkActive="bg-gray-700 text-white">
+            [routerLink]="['/admin/product']" routerLinkActive="bg-gray-700 text-white" (click)="closeSidebar()" >
             <!-- Products Icon -->
             <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15v3c0 .5523.44772 1 1 1h8v-8m-9 4v-4m0 4h9m-9-4V6c0-.55228.44772-1 1-1h16c.5523 0 1 .44772 1 1v4M3 11h11m6.25 5c0 1.2426-1.0073 2.25-2.25 2.25M20.25 16c0-1.2426-1.0073-2.25-2.25-2.25M20.25 16H21m-3 2.25c-1.2426 0-2.25-1.0074-2.25-2.25M18 18.25V19m-2.25-3c0-1.2426 1.0074-2.25 2.25-2.25M15.75 16H15m3-2.25V13m-1.591 1.409-.5303-.5303m4.2426 4.2426-.5303-.5303m-3.182 0-.5303.5303m4.2426-4.2426-.5303.5303"/>
@@ -41,7 +41,7 @@
         </li>
         <li>
           <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded"
-            [routerLink]="['/admin/category']" routerLinkActive="bg-gray-700 text-white">
+            [routerLink]="['/admin/category']" routerLinkActive="bg-gray-700 text-white" (click)="closeSidebar()" >
             <!-- Category Icon -->
             <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -55,7 +55,7 @@
         </li>
         <li>
           <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded"
-            [routerLink]="['/admin/order']" routerLinkActive="bg-gray-700 text-white">
+            [routerLink]="['/admin/order']" routerLinkActive="bg-gray-700 text-white" (click)="closeSidebar()" >
             <!-- Orders Icon -->
             <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -69,7 +69,7 @@
 
         <li>
           <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded"
-            [routerLink]="['/admin/coupon']" routerLinkActive="bg-gray-700 text-white">
+            [routerLink]="['/admin/coupon']" routerLinkActive="bg-gray-700 text-white" (click)="closeSidebar()" >
             <!-- Coupons Icon -->
             <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -83,7 +83,7 @@
 
         <li>
           <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded"
-            [routerLink]="['/admin/stock']" routerLinkActive="bg-gray-700 text-white">
+            [routerLink]="['/admin/stock']" routerLinkActive="bg-gray-700 text-white" (click)="closeSidebar()" >
             <!-- Stock Icon -->
             <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 21">
@@ -96,7 +96,7 @@
 
         <li>
           <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded"
-            [routerLink]="['/admin/analytics']" routerLinkActive="bg-gray-700 text-white">
+            [routerLink]="['/admin/analysis']" routerLinkActive="bg-gray-700 text-white" (click)="closeSidebar()" >
             <!-- Analytics icon -->
             <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
@@ -111,7 +111,7 @@
         <div class="text-gray-500 text-lg p-2">OTHERS</div>
         <li>
           <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded"
-          [routerLink]="['/admin/comments']" routerLinkActive="bg-gray-700 text-white">
+          [routerLink]="['/admin/comments']" routerLinkActive="bg-gray-700 text-white" (click)="closeSidebar()">
           
             <!-- Comments icon -->
             
@@ -126,7 +126,7 @@
         </li>
         <li>
           <a class="flex items-center space-x-2 text-white hover:bg-gray-700 p-2 rounded" 
-          [routerLink]="['/admin/profile']" routerLinkActive="bg-gray-700 text-white">
+          [routerLink]="['/admin/profile']" routerLinkActive="bg-gray-700 text-white" (click)="closeSidebar()">
             <!-- Profile icon -->
             <svg class="w-6 h-6 text-gray-400 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
               <path fill-rule="evenodd" d="M12 20a7.966 7.966 0 0 1-5.002-1.756l.002.001v-.683c0-1.794 1.492-3.25 3.333-3.25h3.334c1.84 0 3.333 1.456 3.333 3.25v.683A7.966 7.966 0 0 1 12 20ZM2 12C2 6.477 6.477 2 12 2s10 4.477 10 10c0 5.5-4.44 9.963-9.932 10h-.138C6.438 21.962 2 17.5 2 12Zm10-5c-1.84 0-3.333 1.455-3.333 3.25S10.159 13.5 12 13.5c1.84 0 3.333-1.455 3.333-3.25S13.841 7 12 7Z" clip-rule="evenodd"/>

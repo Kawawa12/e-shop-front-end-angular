@@ -6,6 +6,8 @@ import { AdminService } from '../services/admin.service';
 import Swal from 'sweetalert2';
 import { MatDialog } from '@angular/material/dialog';
 import { ImageViewModelComponent } from '../components/image-view-model/image-view-model.component';
+import { DirectAddSalesComponent } from '../components/direct-add-sales/direct-add-sales.component';
+import { SalesRecordsComponent } from '../components/sales-records/sales-records.component';
  
 
 
@@ -18,6 +20,7 @@ import { ImageViewModelComponent } from '../components/image-view-model/image-vi
 })
 export class AdminComponent implements OnInit {
 
+
   products: Product[] = []; // Initialize as empty array
   filteredProducts: Product[] = [];
   searchTerm: string = '';
@@ -27,16 +30,19 @@ export class AdminComponent implements OnInit {
   isSubmitting = false;
   isActiveProductsDisplaying = true;
 
+  date = new Date();
+  dayName: string = '';
+
   constructor(private adminService: AdminService,private dialog:MatDialog) {} // Inject your service
 
   ngOnInit(): void {
+    const toDay = new Date();
+    this.dayName = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(toDay)
     this.fetchProducts(); // Fetch products on component initialization
   }
 
   fetchProducts(): void {
-    this.isSubmitting = true;
-  
-    setTimeout(() => {
+    this.isSubmitting = false;
       this.adminService.getActiveProducts().subscribe({
         next: (data: Product[]) => {
           this.products = data;  
@@ -57,7 +63,7 @@ export class AdminComponent implements OnInit {
           this.isSubmitting = false;  
         }
       });
-    }, 1000); // 1-second delay before calling API
+    
   }
   
   
@@ -101,8 +107,6 @@ export class AdminComponent implements OnInit {
 
   activeProducts() {
     this.isSubmitting = true; // Set loading state to true
-  
-    setTimeout(() => {
       this.adminService.getActiveProducts().subscribe({
         next: (response) => {
           // Update both products and filteredProducts arrays
@@ -123,15 +127,13 @@ export class AdminComponent implements OnInit {
         },
         complete: () => {
           this.isSubmitting = false; // Reset loading state
-        }
-      });
-    },1000)
+      }
+    });
   }
   
   inActiveProducts() {
     this.isSubmitting = true; // Set loading state to true
-  
-    setTimeout(() => {
+
       this.adminService.getDeactivatedProducts().subscribe({
         next: (response) => {
           // Update both products and filteredProducts arrays
@@ -153,8 +155,8 @@ export class AdminComponent implements OnInit {
         complete: () => {
           this.isSubmitting = false; // Reset loading state
         }
-      });
-    },1000)
+    });
+    
   }
 
 
@@ -256,6 +258,27 @@ deactivateProduct(productId: number) {
   });
 }
 
- 
+  
+  
+addSales(enterAnimationDuration: string, exitAnimationDuration: string) {
+  this.dialog.open(DirectAddSalesComponent, {
+    width: '90%', // Responsive width
+    maxWidth: '800px', // Maximum width
+    height: 'auto', // Auto height
+    position: { top: '4%' },
+    enterAnimationDuration,
+    exitAnimationDuration,
+  }); 
+}
+
+viewDailySales(enterAnimationDuration: string, exitAnimationDuration: string) {
+  this.dialog.open(SalesRecordsComponent, {
+    width: '90%', // Responsive width
+    maxWidth: '800px', // Maximum width
+    position: { top: '4%' },
+    enterAnimationDuration,
+    exitAnimationDuration,
+  }); 
+}
   
 }

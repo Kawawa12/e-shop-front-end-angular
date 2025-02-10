@@ -1,54 +1,132 @@
-<!-- add-admin.component.html -->
-<div class="max-w-4xl mx-auto mt-6 p-6 bg-white shadow-md rounded-lg">
-    <h2 class="text-xl font-semibold mb-4">Add New Admin</h2>
-    <form [formGroup]="adminForm" (ngSubmit)="onSubmit()">
-      <div class="grid grid-cols-2 gap-4">
-        <div class="mb-4">
-          <label class="block text-gray-700">First Name</label>
-          <input type="text" formControlName="firstName" class="w-full p-2 border rounded" />
-        </div>
-        <div class="mb-4">
-          <label class="block text-gray-700">Last Name</label>
-          <input type="text" formControlName="lastName" class="w-full p-2 border rounded" />
-        </div>
-        <div class="mb-4">
-          <label class="block text-gray-700">Email</label>
-          <input type="email" formControlName="email" class="w-full p-2 border rounded" />
-        </div>
-        <div class="mb-4">
-          <label class="block text-gray-700">Password</label>
-          <input type="password" formControlName="password" class="w-full p-2 border rounded" />
-        </div>
-        <div class="mb-4">
-          <label class="block text-gray-700">Phone</label>
-          <input type="text" formControlName="phone" class="w-full p-2 border rounded" />
-        </div>
-        <div class="mb-4">
-          <label class="block text-gray-700">Year of Birth</label>
-          <input type="text" formControlName="yOfBirth" class="w-full p-2 border rounded" />
-        </div>
-        <div class="mb-4">
-          <label class="block text-gray-700">Address</label>
-          <input type="text" formControlName="address" class="w-full p-2 border rounded" />
-        </div>
-        <div class="mb-4">
-          <label class="block text-gray-700">Gender</label>
-          <select formControlName="gender" class="w-full p-2 border rounded">
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-          </select>
-        </div>
-      </div>
-      <div class="mb-4">
-        <label class="block text-gray-700">Profile Image</label>
-        <input type="file" (change)="onFileSelected($event)" class="w-full p-2 border rounded" />
-      </div>
-      <div *ngIf="imagePreview" class="mb-4">
-        <p class="text-gray-700">Image Preview:</p>
-        <img [src]="imagePreview" alt="Profile Image Preview" class="w-32 h-32 object-cover rounded" />
-      </div>
-      <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded mt-4" [disabled]="adminForm.invalid">
-        Submit
-      </button>
-    </form>
+<div class="h-[90vh] flex flex-col bg-gray-100 p-4 sm:p-6 lg:p-8">
+  <h2 class="text-xl sm:text-2xl lg:text-3xl font-bold mb-4 text-center">
+    Admin Created
+  </h2>
+
+  <!-- Table Container with Scroll -->
+  <div class="bg-white shadow-md rounded-lg p-4 flex-1 overflow-hidden">
+    <!-- Search Input -->
+    <div class="mb-4">
+      <input
+        type="text"
+        placeholder="Search by name, email, or phone"
+        (keyup)="applyFilter($event)"
+        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm sm:text-base lg:text-lg"
+      />
+    </div>
+
+    <!-- Scrollable Table Container -->
+    <div class="overflow-x-auto overflow-y-auto max-h-[80vh]">
+      <table
+        class="w-full min-w-max border-collapse border border-gray-300 rounded-lg shadow-md"
+      >
+        <thead class="bg-blue-500 text-white">
+          <tr>
+            <th
+              class="p-3 text-left text-xs sm:text-sm md:text-base lg:text-lg"
+            >
+              Profile
+            </th>
+            <th
+              class="p-3 text-left text-xs sm:text-sm md:text-base lg:text-lg"
+            >
+              Full Name
+            </th>
+            <th
+              class="p-3 text-left text-xs sm:text-sm md:text-base lg:text-lg"
+            >
+              Email
+            </th>
+            <th
+              class="p-3 text-left text-xs sm:text-sm md:text-base lg:text-lg"
+            >
+              Home Address
+            </th>
+            <th
+              class="p-3 text-left text-xs sm:text-sm md:text-base lg:text-lg"
+            >
+              Mobile Contact
+            </th>
+            <th
+              class="p-3 text-left text-xs sm:text-sm md:text-base lg:text-lg"
+            >
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let admin of filteredDataSource"
+            class="odd:bg-gray-100 even:bg-white hover:bg-gray-200"
+          >
+            <td class="p-3">
+              <img
+                [src]="admin.profileImg"
+                alt="Profile"
+                class="w-10 h-10 sm:w-12 sm:h-12 lg:w-16 lg:h-16 rounded-full"
+              />
+            </td>
+            <td class="p-3 text-xs sm:text-sm md:text-base lg:text-lg">
+              {{ admin.fullName }}
+            </td>
+            <td class="p-3 text-xs sm:text-sm md:text-base lg:text-lg">
+              {{ admin.email }}
+            </td>
+            <td class="p-3 text-xs sm:text-sm md:text-base lg:text-lg">
+              {{ admin.address }}
+            </td>
+            <td class="p-3 text-xs sm:text-sm md:text-base lg:text-lg">
+              {{ admin.phone }}
+            </td>
+            <td class="p-3 align-middle">
+              <div class="flex flex-wrap gap-2 items-center">
+                <button
+                  (click)="toggleAdminStatus(admin)"
+                  [ngClass]="{
+                    'bg-green-500': admin.status,
+                    'bg-red-500': !admin.status
+                  }"
+                  [disabled]="admin.isLoading"
+                  class="w-28 min-w-[7rem] px-4 py-1 sm:px-4 sm:py-1 text-white rounded hover:bg-opacity-80 text-xs sm:text-sm lg:text-base flex items-center justify-center"
+                >
+                  <!-- Button Text -->
+                  <span *ngIf="!admin.isLoading" class="w-full text-center">
+                    {{ admin.status ? "Deactivate" : "Activate" }}
+                  </span>
+
+                  <!-- Loading Spinner -->
+                  <span
+                    *ngIf="admin.isLoading"
+                    class="flex items-center justify-center w-full"
+                  >
+                    <svg
+                      class="animate-spin h-6 w-6 text-white mr-2"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        class="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        stroke-width="6"
+                      ></circle>
+                      <path
+                        class="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      ></path>
+                    </svg>
+                    Processing...
+                  </span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
+</div>

@@ -1,0 +1,25 @@
+ /* Add this to your component's CSS file */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  th, td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  th {
+    background-color: #f7fafc;
+    font-weight: 600;
+  }
+  
+  tr:hover {
+    background-color: #f7fafc;
+  }

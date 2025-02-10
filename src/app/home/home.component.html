@@ -1,20 +1,15 @@
+
 <!-- Header Section -->
-<header
-  class="fixed w-full z-50 transition-all duration-300"
+<div
+  class="fixed w-full z-50 transition-all mb-10 duration-300 lg:h-36 md:h-32 sm:h-24 bg-green-500"
   [ngClass]="{
-    'shadow-md bg-white': isHeaderSolid,
-    'bg-transparent': !isHeaderSolid
+    'shadow-md h-24': isHeaderSolid,
+    'h-32': !isHeaderSolid
   }"
 >
-  <div class="w-full mx-auto px-6 py-8 flex justify-between items-center">
-    <!-- Increased padding to increase height -->
+  <div class="w-full mx-auto px-6 py-4 flex justify-between items-center">
     <!-- Logo -->
-    <div
-      [ngClass]="{
-        'text-white text-5xl font-mono font-semibold': !isHeaderSolid,
-        'text-gray-700 text-5xl font-mono font-semibold': isHeaderSolid
-      }"
-    >
+    <div class="text-white lg:text-4xl md:text-2xl sm:text-lg font-mono font-semibold">
       Rambo Shop
     </div>
 
@@ -22,10 +17,7 @@
     <div class="sm:hidden relative">
       <button
         (click)="toggleDropdown()"
-        [ngClass]="{
-          'text-white': !isHeaderSolid,
-          'text-gray-700': isHeaderSolid
-        }"
+        class="text-white"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -48,38 +40,22 @@
     <nav class="hidden sm:flex items-center space-x-6 ml-auto mr-5">
       <a
         href="#"
-        [ngClass]="{
-          'text-white hover:text-blue-600': !isHeaderSolid,
-          'text-gray-700 hover:text-blue-600': isHeaderSolid
-        }"
-        class="transition-colors duration-300"
+        class="text-white hover:text-blue-200 lg:text-xl transition-colors duration-300"
         >Home</a
       >
       <a
         href="#"
-        [ngClass]="{
-          'text-white hover:text-blue-600': !isHeaderSolid,
-          'text-gray-700 hover:text-blue-600': isHeaderSolid
-        }"
-        class="transition-colors duration-300"
+        class="text-white hover:text-blue-200 lg:text-xl transition-colors duration-300"
         >Shop</a
       >
       <a
         href="#"
-        [ngClass]="{
-          'text-white hover:text-blue-600': !isHeaderSolid,
-          'text-gray-700 hover:text-blue-600': isHeaderSolid
-        }"
-        class="transition-colors duration-300"
+        class="text-white hover:text-blue-200 lg:text-xl transition-colors duration-300"
         >About</a
       >
       <a
         href="#"
-        [ngClass]="{
-          'text-white hover:text-blue-600': !isHeaderSolid,
-          'text-gray-700 hover:text-blue-600': isHeaderSolid
-        }"
-        class="transition-colors duration-300"
+        class="text-white hover:text-blue-200 lg:text-xl transition-colors duration-300"
         >Contact</a
       >
     </nav>
@@ -88,11 +64,7 @@
     <div class="flex items-center space-x-6">
       <button
         (click)="openCart()"
-        [ngClass]="{
-          'text-white hover:text-blue-600': !isHeaderSolid,
-          'text-gray-700 hover:text-blue-600': isHeaderSolid
-        }"
-        class="relative transition-colors duration-300"
+        class="text-white hover:text-blue-200 relative transition-colors duration-300"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -126,13 +98,13 @@
       <ng-container *ngIf="!isLoggedIn; else loggedInTemplate">
         <button
           (click)="login()"
-          class="text-blue-600 border border-blue-600 rounded-lg px-4 py-2 hover:bg-blue-600 hover:text-white transition-colors duration-300"
+          class="text-white border border-white rounded-lg px-4 py-2 hover:bg-white hover:text-green-600 transition-colors duration-300"
         >
           Sign In
         </button>
         <button
           (click)="signUp()"
-          class="text-white bg-blue-600 rounded-lg px-4 py-2 hover:bg-blue-700 transition-colors duration-300"
+          class="text-green-600 bg-white rounded-lg px-4 py-2 hover:bg-gray-100 transition-colors duration-300"
         >
           Sign Up
         </button>
@@ -141,7 +113,7 @@
       <ng-template #loggedInTemplate>
         <button
           (click)="logout()"
-          class="text-red-600 border border-red-600 rounded-lg px-4 py-2 hover:bg-red-600 hover:text-white transition-colors duration-300"
+          class="text-white border border-white rounded-lg px-4 py-2 hover:bg-white hover:text-green-600 transition-colors duration-300"
         >
           Logout
         </button>
@@ -207,37 +179,46 @@
       >
     </div>
   </div>
-</header>
-
+</div>
 <!-- Hero Section -->
-<section
-  class="relative mt-0 h-[600px] sm:h-[700px] md:h-[800px] lg:h-[900px] overflow-hidden"
->
-  <!-- Background Image -->
-  <img
-    src="/images/back.jpg"
-    alt="Hero Background"
-    class="w-full h-full object-cover"
-  />
-
-  <!-- Floating Text Overlay -->
-  <div
-    class="absolute inset-0 bg-black bg-opacity-40 flex flex-col justify-center items-center text-center text-white"
-  >
+<section class="relative h-[600px] sm:h-[700px] md:h-[800px]  bg-white lg:h-[900px] overflow-hidden flex items-center">
+  <!-- Left Side Container for Rambo Shop Details -->
+  <div class="w-1/2 p-10 bg-gray-200 h-auto mt-8 space-x-8 rounded-xl text-green-500">
     <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-      Welcome to Rambo E-Commerce Store
+      Welcome to Rambo Shop and Phone Accessories 
     </h1>
     <p class="text-lg sm:text-xl md:text-2xl mb-8">
       Discover the latest trends and shop the best products.
+      Enjoy wih our services when you have an accounts and receive variety of new and available products in our store
+    </p>
+    <p class="text-lg sm:text-xl md:text-2xl mb-8">
+      Get more offers from our Product series and more updates and details for our services
     </p>
     <a
       href="#"
-      class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-200"
+      class="bg-green-700 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-200"
     >
-      Shop Now
+      Get started now
     </a>
   </div>
+
+  <!-- Right Side Container for Image and Slideshow Buttons -->
+  <div class="w-1/2 ml-8 relative rounded-xl bg-gray-200 ">
+    <!-- Background Image -->
+    <img
+      src="/images/back.jpg"
+      alt="Hero Background"
+      class="w-auto h-auto object-cover rounded-xl"
+    />
+
+    <!-- Slideshow Buttons -->
+    <div class="absolute inset-0 flex items-center justify-between px-4">
+      <button class="absolute left-0 bg-gray-400 text-white px-4 py-3 rounded-full">&#60;</button>
+      <button class="absolute right-0 bg-gray-400 text-white px-4 py-3 rounded-full">&#62;</button>
+    </div>
+  </div>
 </section>
+
 
 <div class="w-full flex flex-wrap justify-center gap-8 py-32">
   <!-- Card 1 -->
@@ -281,9 +262,6 @@
     </div>
   </div>
 </div>
-
-
-
 
 <!-- Category and Search Bar Section -->
 <section class="container mx-auto px-6 py-6">

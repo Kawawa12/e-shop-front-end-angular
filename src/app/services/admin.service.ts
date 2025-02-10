@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
-import { AdminRespDto, Category, CustomerOrderRespDto, Product, StockResponseDto } from '../model';
+import { AdminRespDto, Category, CustomerOrderRespDto, Product, SalesDto, SalesRecord, StockResponseDto } from '../model';
 
 @Injectable({
   providedIn: 'root'
@@ -193,6 +193,16 @@ export class AdminService {
     return this.http.post<any>(url, id);
   }
 
+  //Sales Records
+
+  addNewSales(salesData:SalesDto): Observable<any>{
+  
+    return this.http.post(`${this.BASE_URL}/add-sales`,salesData, { responseType: 'text' });
+  }
+
+  getDailySales(): Observable<SalesRecord>{
+    return this.http.get<SalesRecord>(`${this.BASE_URL}/daily`);
+  }
 
   
 }

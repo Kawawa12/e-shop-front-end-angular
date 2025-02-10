@@ -46,32 +46,41 @@ export class SignInComponent implements OnInit {
     if (this.signInForm.valid) {
       const signInData: SignIn = this.signInForm.value;
       this.isSubmitting = true;
-
+  
       this.authService.signIn(signInData).subscribe({
         next: (response) => {
-          const role = localStorage.getItem('role');
-          if (role === 'USER') {
-            this.openUserWelcomeModal();
-          } else if (role === 'ADMIN') {
-            this.authService.goToAdmin();
-          } else if (role === 'MANAGER') {
-            this.authService.goToManager();
-          }
-          else {
+          // Check if the response status is 200 (successful login)
+          if (response.status === 200) {
+            // Store user data and token (optional, depending on your use case)
+            localStorage.setItem('role', response.role);
+            localStorage.setItem('jwtToken', response.jwtToken);
+  
+            // Handle role-based redirection
+            if (response.role === 'USER') {
+              this.openUserWelcomeModal();
+            } else if (response.role === 'ADMIN') {
+              this.authService.goToAdmin();
+            } else if (response.role === 'MANAGER') {
+              this.authService.goToManager();
+            }
+          } else {
+            // If user is inactive or there's an error, display a message
             Swal.fire({
-              title: 'Invalid!',
+              title: 'Error!',
               icon: 'error',
-              text: `${response.message}!, Please Enter a valid Credentials `,
+              text: response.message || 'Login failed! Please check your credentials.',
               confirmButtonText: 'Close',
               confirmButtonColor: '#3085d6',
             });
-            
+  
+            // Redirect to login page if inactive or error occurs
             this.authService.goToLoginPage();
           }
           this.isSubmitting = false;
         },
         error: (error) => {
-          // console.error('Login failed', error);
+          // Handle other errors such as network issues or server errors
+          console.error('Login failed', error);
           this.isSubmitting = false;
         },
       });
@@ -79,7 +88,7 @@ export class SignInComponent implements OnInit {
       console.log('Form is invalid');
     }
   }
-
+  
   openUserWelcomeModal(): void {
     const dialogRef = this.dialog.open(UserWelcomeModalComponent, {
       width: '400px',

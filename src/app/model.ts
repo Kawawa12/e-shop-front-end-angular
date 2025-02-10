@@ -77,3 +77,28 @@ export interface AdminRespDto {
   managerEmail: string;
   managerPhone:string
 }
+
+export interface ManagerProfileDto{
+  fullName: string;
+  email:string
+  phone: string;
+  address: string;
+  gender: string;
+}
+
+export interface SalesDto{
+  productName: string;
+  description:string
+  quantity: number;
+  price: number;
+}
+
+export interface SalesRecord {
+  id: number;
+  saleDate: string;
+  productNames: string[];
+  quantities: number[];
+  prices: number[];
+  descriptions: string[];
+  totalAmount: number;
+}

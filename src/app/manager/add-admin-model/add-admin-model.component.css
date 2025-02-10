@@ -1,0 +1,16 @@
+/* Ensure the image preview container is visible */
+.w-32 {
+    width: 8rem; /* 128px */
+  }
+  
+  .h-32 {
+    height: 8rem; /* 128px */
+  }
+  
+  .object-cover {
+    object-fit: cover; /* Ensures the image covers the container */
+  }
+  
+  .overflow-hidden {
+    overflow: hidden; /* Prevents the image from overflowing */
+  }
