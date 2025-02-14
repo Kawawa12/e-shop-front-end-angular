@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ManageAdminsComponent } from '../manage-admins/manage-admins.component';
 import { CommonModule } from '@angular/common';
 import { SalesRecordsComponent } from '../../components/sales-records/sales-records.component';
 import { Chart } from 'chart.js';
 import { AddAdminModelComponent } from '../add-admin-model/add-admin-model.component';
+import { ManagerService } from '../../services/manager.service';
+import { DatePickerComponent } from '../../components/date-picker/date-picker.component';
+import { SalesService } from '../../services/sales.service';
+import { SalesBasedDateModelComponent } from '../sales-based-date-model/sales-based-date-model.component';
 
 @Component({
   selector: 'app-manager-dashboard',
@@ -14,18 +17,117 @@ import { AddAdminModelComponent } from '../add-admin-model/add-admin-model.compo
   styleUrl: './manager-dashboard.component.css'
 })
 export class ManagerDashboardComponent implements OnInit{
+
 isSubmitting: any;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog,private managerService:ManagerService, private salesService:SalesService) { }
   
   date = new Date();
   dayName: string = '';
+  totalCustomers: any;
+  totalProductInStore: any;
+  totalActiveAdmins: any;
+  totalCategories: any;
+  totalNewOrders: any;
+  totalCanceledOrders: any;
+  totalConfirmedOrders: any;
+  totalCompletedOrders: any;
 
   ngOnInit(): void {
     const toDay = new Date();
     this.dayName = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(toDay)
+    //Get total customer
+    this.getTotalCustomers();
+    //Get total Active admins
+    this.getTotalActiveAdmins();
+    //Get Total stock products
+    this.getTotalProducts(); 
+    //Get total cetgories
+    this.getTotaCategories();
+    //Get total new orders
+    this.getTotalNewOrders();
+    //Get total confirmed orders
+    this.getConfirmedOrders();
+    //Get Completed orders
+    this.getTotalCompletedOrders();
+    //Get Canceled orders
+    this.getTotalCanceledOrders();
   }
 
+  //TOTAL CUSTOMERS
+  getTotalCustomers() {
+    this.managerService.getTotalCustomers().subscribe({
+      next: (res) => {
+        this.totalCustomers = res ?? 0;
+       }
+    })
+  }
+
+  //TOTAL PRODUCTS
+  getTotalProducts() {
+    this.managerService.getTotalProducts().subscribe({
+      next: (res) => {
+        this.totalProductInStore = res ?? 0;
+       }
+    })
+  }
+
+  //TOTAL CATEGORIES
+  getTotaCategories() {
+    this.managerService.getTotalCategories().subscribe({
+      next: (res) => {
+        this.totalCategories = res ?? 0;
+       }
+    })
+  }
+
+  //ACTIVE ADMINS
+  getTotalActiveAdmins() {
+    this.managerService.getActiveAdmins().subscribe({
+      next: (res) => {
+        this.totalActiveAdmins = res ?? 0;
+       }
+    })
+  }
+
+  //NEW ORDERS
+  getTotalNewOrders() {
+    this.managerService.getTotalNewOrders().subscribe( {
+      next: (res) => {
+        this.totalNewOrders = res ?? 0;
+      }
+    })
+  }
+
+  //COMPLETED ORDERS
+  getTotalCompletedOrders() {
+    this.managerService.getTotalCompletedOrders().subscribe({
+      next: (res) => {
+        this.totalCompletedOrders = res ?? 0;
+      }
+    })
+  }
+
+  //CANCELED ORDERS
+  getTotalCanceledOrders() {
+    this.managerService.getTotalCanceledOrders().subscribe({
+      next: (res) => {
+        this.totalCanceledOrders = res ?? 0;
+       }
+    })
+  }
+
+  //CONFIRMED ORDERS
+  getConfirmedOrders() {
+    this.managerService.getTotalConfirmedOrders().subscribe({
+      next: (res) => {
+        this.totalConfirmedOrders = res ?? 0; // Ensure 0 is assigned if res is falsy (null or undefined)
+      }
+    });
+  }
+  
+   
+//ADD ADMIN
 addAdmin(enterAnimationDuration:string, exitAnimationDuration:string) {
   this.dialog.open(AddAdminModelComponent, {
     width: '90%', // Responsive width
@@ -36,6 +138,7 @@ addAdmin(enterAnimationDuration:string, exitAnimationDuration:string) {
   })
 }
   
+  //VIEW DAILY SALES
   viewDailySales(enterAnimationDuration: string, exitAnimationDuration: string) {
     this.dialog.open(SalesRecordsComponent, {
       width: '90%', // Responsive width
@@ -47,7 +150,7 @@ addAdmin(enterAnimationDuration:string, exitAnimationDuration:string) {
   }
 
 
-  //Charts implementations
+  //CHART IMPLEMENTATIONS
 
 oday = new Date();
 totalProductsSold = 120;
@@ -149,6 +252,69 @@ loadChart() {
     }
   });
 }
+  
+  
+openDatePickerDialog(enterAnimationDuration:string, exitAnimationDuration:string) {
+  const dialogRef = this.dialog.open(DatePickerComponent, {
+    width: '400px',
+    enterAnimationDuration,
+    exitAnimationDuration,
+  });
+
+  dialogRef.afterClosed().subscribe((selectedDate) => {
+    if (selectedDate) {
+      this.openSalesDialog(selectedDate,'3000ms', '500ms');
+    }
+  });
+}
+
+ 
+//Parent component for Sales based date
+openSalesDialog(date: string,openAnimationDur:string, exitAnimationDur:string) {
+  //console.log("Date selected: ", date);
+  openAnimationDur;
+  exitAnimationDur;
+
+  const screenWidth = window.innerWidth;
+  let dialogWidth = '70%'; // Default width for larger screens (increased for larger devices)
+
+  if (screenWidth < 600) {
+    // For small screens (e.g., mobile)
+    dialogWidth = '85%';
+  } else if (screenWidth < 960) {
+    // For medium screens (e.g., tablets)
+    dialogWidth = '65%';
+  }
+
+  this.salesService.getSalesByDate(date).subscribe({
+    next: (response) => {
+      //console.log("Sales : ", response);
+      this.dialog.open(SalesBasedDateModelComponent, {
+        width: dialogWidth,
+        position:{top:'10%'},
+        data: {
+          salesData: response.data,  // Pass sales data
+          selectedDate: date,        // Pass selected date
+          errorMessage: response.message || '' // Pass error message if available
+        }
+      });
+    },
+    error: (error) => {
+      console.error('Error fetching sales:', error);
+      this.dialog.open(SalesBasedDateModelComponent, {
+        width: dialogWidth,  // Use the dynamically calculated width
+        data: {
+          salesData: null,
+          selectedDate: date,
+          errorMessage: 'No sales data found for this date.'
+        }
+      });
+    }
+  });
+}
+
+
+
   
 }
 

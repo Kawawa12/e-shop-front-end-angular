@@ -1,62 +1,99 @@
-<div class="p-4 bg-white shadow-lg rounded-xl">
-    <h2 class="lg:text-4xl md:text-3xl sm:text-2xl text-center font-mono underline font-extrabold text-gray-600 mb-4">
-      Weekly Sales Report Analysis 
-    </h2>
-    <!-- Week Date Range -->
-    <div class="text-center text-gray-600 mb-8 text-lg font-semibold underline">
-        ( <span class="lg:text-3xl md:text-2xl sm:text-xl font-mono">{{ weekStartDate | date:'dd/MM/yyyy' }}</span>  
-        &nbsp;&nbsp;-&nbsp;&nbsp;  
-        <span class="lg:text-3xl md:text-2xl sm:text-xl font-mono">{{ weekEndDate | date:'dd/MM/yyyy' }}</span> )
+<div class="p-4 mt-4 bg-white shadow-lg rounded-xl">
+  <h2
+    class="lg:text-3xl md:text-2xl sm:text-xl text-center font-mono py-4 underline font-extrabold text-gray-600 mb-4"
+  >
+    Weekly Sales Report Analysis
+  </h2>
+  <!-- Week Date Range -->
+  <div class="text-center text-gray-600 mb-8 text-lg font-semibold underline">
+    (
+    <span class="lg:text-2xl md:text-xl sm:text-lg font-mono">{{
+      weekStartDate | date : "dd/MM/yyyy"
+    }}</span>
+    &nbsp;&nbsp;-&nbsp;&nbsp; 
+    <span class="lg:text-2xl md:text-xl sm:text-xl font-mono">{{
+      weekEndDate | date : "dd/MM/yyyy"
+    }}</span>
+    )
+  </div>
+
+  <!-- Bar Chart -->
+  <div class="flex justify-center">
+    <div
+      class="w-full lg:w-3/4 xl:w-2/3 h-[550px] p-2 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg shadow-md"
+    >
+      <canvas id="salesChart"></canvas>
     </div>
-    
-  
-  
-    <!-- Bar Chart -->
-    <div class="flex justify-center">
-      <div class="w-full lg:w-3/4 xl:w-2/3 h-[550px] p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg shadow-md">
-        <canvas id="salesChart"></canvas>
-      </div>
-    </div>
-  
-    <!-- Summary Section -->
-    <div *ngIf="salesRecords.length > 0" class="mt-10">
-      <h3 class="text-2xl font-bold text-gray-600 underline mb-6">Sales Summary</h3>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        
-        <!-- Total Products Sold -->
-        <div class="p-6 bg-gradient-to-r from-green-50 to-green-100 rounded-lg shadow-md flex items-center">
-          <span class="text-green-500 text-3xl mr-4">📦</span>
-          <div>
-            <p class="text-lg text-gray-600">Total Products Sold</p>
-            <p class="text-3xl md:text-2xl sm:text-xl font-extrabold text-gray-500">{{ totalProductsSold }}</p>
-          </div>
+  </div>
+
+  <!-- Summary Section -->
+  <div *ngIf="salesRecords.length > 0" class="mt-10">
+    <h3 class="text-2xl font-bold text-gray-600 underline mb-6">
+      Sales Summary
+    </h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Total Products Sold -->
+      <div
+        class="p-6 bg-gradient-to-r from-green-50 to-green-100 rounded-lg shadow-md flex items-center"
+      >
+        <span class="text-green-500 text-3xl mr-4">📦</span>
+        <div>
+          <p class="text-2xl mb-4 underline text-gray-600">Total Products Sold</p>
+          <p
+            class="text-3xl md:text-2xl sm:text-xl font-extrabold text-gray-500"
+          >
+            {{ totalProductsSold }}
+          </p>
         </div>
-  
-        <!-- Total Revenue -->
-<div class="p-6 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-lg shadow-md flex items-center">
-    <span class="text-yellow-500 text-3xl mr-4">💵</span> <!-- Changed icon to Money Bills -->
-    <div>
-      <p class="text-lg text-gray-600">Total Revenue</p>
-      <p class="text-3xl font-extrabold md:text-2xl sm:text-xl text-gray-500">{{ totalRevenue | number:'1.0-2' }} /=</p>
-    </div>
-  </div>
-  
-  <!-- Average Sales Per Day -->
-  <div class="p-6 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg shadow-md flex items-center">
-    <span class="text-blue-500 text-3xl mr-4">📊</span> <!-- Changed icon to Bar Chart -->
-    <div>
-      <p class="text-lg text-gray-600">Average Sales Per Day</p>
-      <p class="text-3xl font-extrabold md:text-2xl sm:text-xl text-gray-500">{{ averageSalesPerDay | number:'1.0-2' }} /=</p>
-    </div>
-  </div>
-  
-  
+      </div>
+
+      <!-- Total Revenue -->
+      <div
+        class="p-6 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-lg shadow-md flex items-center"
+      >
+        <span class="text-yellow-500 text-3xl mr-4">💵</span>
+        <!-- Changed icon to Money Bills -->
+        <div>
+          <p class="text-2xl mb-4 underline text-gray-600">Total Revenue (Tsh)</p>
+          <p
+            class="text-3xl font-extrabold md:text-2xl sm:text-xl text-gray-500"
+          >
+            {{ totalRevenue | number : "1.0-2" }} /=
+          </p>
+        </div>
+      </div>
+
+      <!-- Average Sales Per Day -->
+      <div class="p-6 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg shadow-md flex items-center border border-blue-200">
+        <!-- Icon -->
+        <span class="text-blue-500 text-3xl mr-4">📊</span>
+      
+        <!-- Content Container -->
+        <div class="flex-1 flex justify-between items-center">
+          <!-- Average Sales -->
+          <div class="pr-4 items-center">
+            <p class="text-2xl py-2 underline text-gray-600">Average Sales (Tsh)</p>
+            <p class="text-3xl font-extrabold md:text-2xl sm:text-xl text-gray-500">
+              {{ averageSalesPerDay | number : "1.0-2" }} /=
+            </p>
+          </div>
+      
+          <!-- Days with Sales -->
+          <div class="pl-4 border-l border-blue-200">
+            <p class="text-2xl text-gray-600 underline">Days Sales Were Performed</p>
+            <ul class="list-disc pl-5 text-xl text-gray-500">
+              <li *ngFor="let day of daysWithSales">{{ day }}</li>
+            </ul>
+          </div>
+        </div> 
       </div>
     </div>
-  
-    <!-- No data message -->
-    <div *ngIf="salesRecords.length === 0" class="mt-6 text-center">
-      <p class="text-red-500 text-lg font-semibold">⚠️ No sales records found for the last week.</p>
-    </div>
   </div>
-  
+
+  <!-- No data message -->
+  <div *ngIf="salesRecords.length === 0" class="mt-6 text-center">
+    <p class="text-red-500 md:text-xl lg:text-2xl font-semibold">
+      ⚠️ No sales records found for the last week.
+    </p>
+  </div>
+</div>

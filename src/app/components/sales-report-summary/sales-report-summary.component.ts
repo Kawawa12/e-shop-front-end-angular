@@ -12,6 +12,8 @@ import { CommonModule } from '@angular/common';
 export class SalesReportSummaryComponent implements OnInit {
   salesRecords: SalesRecord[] = []; // For last week's sales
   errorMessage: string | null = null;
+  totalRevenue: number = 0; // Total revenue for the week
+  averageRevenue: number = 0; // Average revenue for the week
 
   constructor(private salesService: SalesService) {}
 
@@ -26,6 +28,7 @@ export class SalesReportSummaryComponent implements OnInit {
       next: (response) => {
         if (response.data) {
           this.salesRecords = response.data;
+          this.calculateRevenue(); // Calculate total and average revenue
           this.errorMessage = null;
         } else {
           this.salesRecords = [];
@@ -42,6 +45,16 @@ export class SalesReportSummaryComponent implements OnInit {
         }
       },
     });
+  }
+
+  // Calculate total and average revenue
+  calculateRevenue(): void {
+    // Calculate total revenue
+    this.totalRevenue = this.salesRecords.reduce((sum, record) => sum + record.totalAmount, 0);
+
+    // Calculate average revenue
+    const daysWithSales = this.salesRecords.length; // Number of days with sales
+    this.averageRevenue = daysWithSales > 0 ? this.totalRevenue / daysWithSales : 0; // Avoid division by zero
   }
 
   // Get the day name from the saleDate

@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-manager-layout',
   standalone:true,
-  imports: [RouterLink,RouterOutlet],
+  imports: [RouterLink,RouterOutlet,RouterModule],
   templateUrl: './manager-layout.component.html',
   styleUrl: './manager-layout.component.css'
 })

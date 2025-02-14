@@ -84,6 +84,7 @@ export interface ManagerProfileDto{
   phone: string;
   address: string;
   gender: string;
+  yOfBirth?: string;
 }
 
 export interface SalesDto{

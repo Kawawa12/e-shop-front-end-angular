@@ -67,23 +67,32 @@ export class AnalyticsComponent implements AfterViewInit {
   }
   
 
-  // Calculate the summary
+  daysWithSales: string[] = [];
+
   calculateSummary() {
+    // Calculate total products sold
     this.totalProductsSold = this.salesRecords.reduce(
       (sum, record) => sum + record.quantities.reduce((a, b) => a + b, 0),
       0
     );
   
+    // Calculate total revenue
     this.totalRevenue = this.salesRecords.reduce(
       (sum, record) => sum + record.totalAmount,
       0
     );
   
-    // Ensure we consider all 7 days of the week even if no sales occurred
-    const totalDays = 7; // Always consider a full week
-    
-    this.averageSalesPerDay = this.totalRevenue / totalDays;
+    // Get days where sales were performed
+    this.daysWithSales = this.salesRecords
+      .filter((record) => record.totalAmount > 0 || record.quantities.some(q => q > 0)) // Filter days with sales
+      .map(record => this.getDayName(record.saleDate)); // Extract day names
+  
+    // Calculate average sales per day based only on days with sales
+    const salesDaysCount = this.daysWithSales.length;
+    this.averageSalesPerDay = salesDaysCount > 0 ? this.totalRevenue / salesDaysCount : 0;
   }
+
+  
   
 
   // Get the day name from the saleDate

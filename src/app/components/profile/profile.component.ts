@@ -4,8 +4,8 @@ import { AdminProfileModelComponent } from '../admin-profile-model/admin-profile
 import { ChangePasswordModelComponent } from '../change-password-model/change-password-model.component';
 import { AdminService } from '../../services/admin.service';
 import { AdminRespDto } from '../../model';
-import { EditImageProfileModelComponent } from '../../edit-image-profile-model/edit-image-profile-model.component';
 import { CommonModule } from '@angular/common';
+import { EditImagProfComponent } from '../../admin/edit-imag-prof/edit-imag-prof.component';
 
 @Component({
   selector: 'app-profile',
@@ -31,7 +31,6 @@ export class ProfileComponent implements OnInit {
   managerEmail: '',
   managerPhone: ''
 };
-
 
   constructor(private dialog: MatDialog, private adminService: AdminService) {}
 
@@ -66,12 +65,21 @@ export class ProfileComponent implements OnInit {
   }
 
   updateAdminProfile() {
-    this.dialog.open(AdminProfileModelComponent, {
+   const dialogRef = this.dialog.open(AdminProfileModelComponent, {
       // data: admin,
       width: '90%', // Responsive width
       maxWidth: '800px', // Maximum width
       height: 'auto', // Auto height
-      position: { top: '5%' },
+     position: { top: '5%' },
+      
+     //Path dat to edit
+     data: this.profileData,
+   });
+    
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.getAdminProfile();
+      }
     });
   }
 
@@ -86,11 +94,16 @@ export class ProfileComponent implements OnInit {
 
 
   editImageProf() {
-    this.dialog.open(EditImageProfileModelComponent, {
+   const dialogRef =  this.dialog.open(EditImagProfComponent, {
       width: '30%',
       position: { top: '5%' },
       data: { imageUrl: this.imageUrl }
-    });
+   });
+    
+    //Listen from edit img dialog component
+    dialogRef.componentInstance.imageUpdated.subscribe(() => {
+      this.getAdminProfileImage();
+    })
   }
 
 }

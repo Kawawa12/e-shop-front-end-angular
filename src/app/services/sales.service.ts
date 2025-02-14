@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 
 export interface SalesRecord {
+  day: string;
   id: number;
   saleDate: string;
   productNames: string[];
@@ -42,4 +43,19 @@ export class SalesService {
         })
       );
   }
+
+  getSalesByDate(date: string): Observable<ApiResponse<SalesRecord[]>> {
+    return this.http.get<ApiResponse<SalesRecord[]>>(`${this.apiUrl}/date/${date}`).pipe(
+      catchError((error: HttpErrorResponse) => {
+        // Handle the 404 error specifically and throw a user-friendly message
+        if (error.status === 404) {
+          return throwError(() => new Error('No sales records found for the selected date.'));
+        }
+        // Handle other errors
+        return throwError(() => new Error('Failed to fetch sales records.'));
+      })
+    );
+  }
+  
+
 }

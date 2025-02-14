@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+ 
 
 @Component({
   selector: 'app-view-comments',
@@ -6,6 +7,14 @@ import { Component } from '@angular/core';
   templateUrl: './view-comments.component.html',
   styleUrl: './view-comments.component.css'
 })
-export class ViewCommentsComponent {
+export class ViewCommentsComponent implements OnInit{
+
+  activeUsers: string = '';
+
+  constructor() {}
+
+  ngOnInit(): void {
+    
+  }
 
 }

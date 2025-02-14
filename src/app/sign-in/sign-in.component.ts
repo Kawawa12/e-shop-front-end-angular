@@ -12,6 +12,7 @@ import { AuthService } from '../services/auth.service';
 import { UserWelcomeModalComponent } from '../user-welcome-modal/user-welcome-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
+import { state } from '@angular/animations';
 
 @Component({
   selector: 'app-sign-in',
@@ -63,7 +64,19 @@ export class SignInComponent implements OnInit {
             } else if (response.role === 'MANAGER') {
               this.authService.goToManager();
             }
-          } else {
+          } else if (response.status === 403) {
+             // If user is inactive or there's an error, display a message
+             Swal.fire({
+              title: 'Error!',
+              icon: 'error',
+              text: response.message || 'Login failed! Please check your credentials.',
+              confirmButtonText: 'Close',
+              confirmButtonColor: '#3085d6',
+            });
+  
+            this.authService.goToLoginPage();
+          }
+          else {
             // If user is inactive or there's an error, display a message
             Swal.fire({
               title: 'Error!',

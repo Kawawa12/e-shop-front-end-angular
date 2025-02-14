@@ -53,6 +53,8 @@ export const routes: Routes = [
       { path: 'manage-admin', component: ManageAdminsComponent },
       { path: 'analysis', component: AnalyticsComponent },
       { path: 'comments', component: CommentsComponent },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+
     ]
    },
   { path: 'place-order',component: PlaceOrderComponent},

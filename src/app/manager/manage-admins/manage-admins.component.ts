@@ -6,6 +6,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import Swal from 'sweetalert2';
+import { MatDialog } from '@angular/material/dialog';
+import { OpenAdminImageProfileViewModelComponent } from '../open-admin-image-profile-view-model/open-admin-image-profile-view-model.component';
+import { AdminService } from '../../services/admin.service';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 export interface AdminImageDto {
   profileImg: any;
@@ -28,12 +32,14 @@ export interface AdminImageDto {
   templateUrl: './manage-admins.component.html',
   styleUrls: ['./manage-admins.component.css'],
 })
+  
 export class ManageAdminsComponent implements OnInit {
   displayedColumns: string[] = ['profileImage', 'fullName', 'email', 'homeAddress', 'phone', 'actions'];
   dataSource: AdminImageDto[] = [];
   filteredDataSource: AdminImageDto[] = [];
+  isLoading: boolean = false;
 
-  constructor(private managerService: ManagerService) {}
+  constructor(private managerService: ManagerService, private dialog:MatDialog,private adminService:AdminService) {}
 
   ngOnInit(): void {
     this.getAllAdmins();
@@ -50,25 +56,36 @@ export class ManageAdminsComponent implements OnInit {
   }
 
   getAllAdmins() {
+    this.isLoading = true; // Show loader before API call
     this.managerService.getAdmins().subscribe({
       next: (res: AdminImageDto[]) => {
-        console.log('Admins:', res);
         this.dataSource = res.map((admin) => ({
           ...admin,
           profileImg: admin.byteImage 
             ? `data:image/png;base64,${admin.byteImage}` 
-            : 'https://via.placeholder.com/50',
+            : '/images/profile_mg.avif',
           isActive: admin.status, // Initialize based on backend response
           isLoading: false, // Initialize loading state as false
         }));
         this.filteredDataSource = this.dataSource;
+        this.isLoading = false; // Hide loader after data is loaded
       },
       error: (error) => {
         console.error('Error fetching admins:', error);
+        this.isLoading = false; // Hide loader on error
       },
     });
   }
   
+
+  
+  
+  openProfile(admin:AdminImageDto) {
+    this.dialog.open(OpenAdminImageProfileViewModelComponent, {
+      position:{top:'5%'},
+      data:admin
+    })
+  }
 
   toggleAdminStatus(admin: AdminImageDto) {
     const action = admin.status ? 'Deactivate' : 'Activate';

@@ -77,7 +77,7 @@ export class OrderComponent implements OnInit {
   newOrders() {
     this.isSubmitting = true;
 
-    setTimeout(() => {
+     
       this.adminServices.getNewOrders().subscribe({
         next: (orders) => {
           this.dataSource.data = orders;
@@ -100,13 +100,13 @@ export class OrderComponent implements OnInit {
           this.isSubmitting = false;
         },
       });
-    }, 1000);
+     
   }
 
   confOrders() {
     this.isSubmitting = true;
 
-    setTimeout(() => {
+    
       this.adminServices.getConfirmedOrders().subscribe({
         next: (orders) => {
           this.dataSource.data = orders;
@@ -129,13 +129,13 @@ export class OrderComponent implements OnInit {
           this.isSubmitting = false;
         },
       });
-    }, 1000);
+     
   }
 
   completedOrders() {
     this.isSubmitting = true;
 
-    setTimeout(() => {
+   
       this.adminServices.getCompletedOrders().subscribe({
         next: (orders) => {
           this.dataSource.data = orders;
@@ -157,13 +157,11 @@ export class OrderComponent implements OnInit {
           this.isSubmitting = false;
         },
       });
-    }, 1000);
+    
   }
 
   cancelOrdes() {
     this.isSubmitting = true;
-
-    setTimeout(() => {
       this.adminServices.getCanceledOrders().subscribe({
         next: (orders) => {
           this.dataSource.data = orders;
@@ -186,7 +184,7 @@ export class OrderComponent implements OnInit {
           this.isSubmitting = false;
         },
       });
-    }, 1000);
+ 
   }
 
   ngAfterViewInit() {

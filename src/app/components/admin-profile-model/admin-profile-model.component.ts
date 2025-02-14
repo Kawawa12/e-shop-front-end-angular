@@ -3,8 +3,8 @@ import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ManagerProfileDto } from '../../model';
-import { ManagerService } from '../../services/manager.service';
 import Swal from 'sweetalert2';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-admin-profile-model',
@@ -17,12 +17,25 @@ import Swal from 'sweetalert2';
   
 export class AdminProfileModelComponent{
 
-
   profileData: ManagerProfileDto;
   managerId: any
 
+  setDate(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.value) {
+      this.profileData.yOfBirth = this.formatDate(input.value);
+    }
+ }
+
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return date.toISOString().split('T')[0];
+  }
+
+ 
+
   constructor(private dialogRef: MatDialogRef<AdminProfileModelComponent>,
-    @Inject(MAT_DIALOG_DATA) public data:ManagerProfileDto, private managerService:ManagerService
+    @Inject(MAT_DIALOG_DATA) public data:ManagerProfileDto, private adminService:AdminService
   ) {
     //assign data to spread
     this.profileData = { ...data };
@@ -48,7 +61,7 @@ export class AdminProfileModelComponent{
     });
 
     
-    this.managerService.updateManagerProf(this.managerId, this.profileData).subscribe({
+    this.adminService.updateAdminProf(this.managerId, this.profileData).subscribe({
       
       next: (response) => {
         console.log('Profile Data:', this.profileData); // Log backend response

@@ -5,7 +5,7 @@
     <div class="flex justify-end items-center space-x-8">
       <p class="lg:text-2xlmd:text-xl sm:text-lg text-gray-600 font-mono font-semibold">{{ currentDate | date:'EEEE' }}</p>
       <!-- Make sure saleDate is valid -->
-      <p class="text-xl text-gray-600 font-mono" *ngIf="sales">{{ sales.saleDate | date:'yyyy-MM-dd' }}</p>
+      <p class="text-xl text-gray-600 font-mono" *ngIf="sales">{{ sales.saleDate | date:'dd/MM/yyyy' }}</p>
     </div>
   </div>
 

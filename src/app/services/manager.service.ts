@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, tap, throwError } from 'rxjs';
-import { ManagerProfileDto } from '../model';
+import { ManagerProfileDto, SalesDto, SalesRecord } from '../model';
 import { AdminImageDto } from '../manager/manage-admins/manage-admins.component';
 
 @Injectable({
@@ -55,5 +55,38 @@ export class ManagerService {
     return this.http.put(`${this.BASE_URL}/activate-or-deactivate-admin/${id}`, {}, { responseType: 'text' });
   }
   
+  getTotalCustomers(): Observable<number>{
+    return this.http.get<number>(`${this.BASE_URL}/total-customers`);
+  }
+
+  getTotalProducts(): Observable<number>{
+    return this.http.get<number>(`${this.BASE_URL}/total-stock-products`);
+  }
+
+  getActiveAdmins(): Observable<number>{
+    return this.http.get<number>(`${this.BASE_URL}/active-admins`);
+  }
+
+  getTotalCategories(): Observable<number>{
+    return this.http.get<number>(`${this.BASE_URL}/total-categories`);
+  }
+
+  getTotalNewOrders(): Observable<number>{
+    return this.http.get<number>(`${this.BASE_URL}/total-new-orders`);
+  }
+
+  getTotalConfirmedOrders(): Observable<number>{
+    return this.http.get<number>(`${this.BASE_URL}/total-confirmed-orders`);
+  }
+
+  getTotalCanceledOrders(): Observable<number>{
+    return this.http.get<number>(`${this.BASE_URL}/total-canceled-orders`);
+  }
+
+  getTotalCompletedOrders(): Observable<number>{
+    return this.http.get<number>(`${this.BASE_URL}/total-completed-orders`);
+  }
+
+ 
 
 }

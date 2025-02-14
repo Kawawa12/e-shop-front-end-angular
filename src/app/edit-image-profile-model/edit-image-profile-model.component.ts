@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Inject, Output } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { AdminService } from '../services/admin.service';
 import { ManagerService } from '../services/manager.service';
 
 @Component({
@@ -14,6 +13,7 @@ import { ManagerService } from '../services/manager.service';
   
   
 export class EditImageProfileModelComponent {
+
   imageUrl: string | ArrayBuffer | null = null;
   selectedFile: File | null = null;
   isLoading: boolean = false;
@@ -61,7 +61,7 @@ export class EditImageProfileModelComponent {
       return;
     }
      
-    console.log('Id :', this.id, ' Image : ', this.selectedFile as File);
+    //console.log('Id :', this.id, ' Image : ', this.selectedFile as File);
     this.managerService.updateManagerProfImg(this.id, formData).subscribe({
       next: (res) => {
         //console.log('Updated image response:', res);
@@ -71,7 +71,7 @@ export class EditImageProfileModelComponent {
         
       },
       error: (error) => {
-        console.error('Error updating image:', error);
+       // console.error('Error updating image:', error);
         alert('Failed to update image.');
       },
       complete: () => {

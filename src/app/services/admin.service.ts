@@ -1,18 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, throwError } from 'rxjs';
-import { AdminRespDto, Category, CustomerOrderRespDto, Product, SalesDto, SalesRecord, StockResponseDto } from '../model';
+import { catchError, map, Observable, tap, throwError } from 'rxjs';
+import { AdminRespDto, Category, CustomerOrderRespDto, ManagerProfileDto, Product, SalesDto, SalesRecord, StockResponseDto } from '../model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AdminService {
-  deleteCategory(categoryId: number) {
-     
-  }
-  updateCategory(updatedCategory: { catName: string; id: number; }) {
    
-  }
 
   private BASE_URL = 'http://localhost:8080/auth/api';
 
@@ -34,6 +29,17 @@ export class AdminService {
   getAdminProfileDetails(id: any): Observable<AdminRespDto>{
     const url = `${this.BASE_URL}/admin/${id}`;
     return this.http.get<AdminRespDto>(url);
+  }
+
+  updateAdminProf(id: any, profileDto: ManagerProfileDto): Observable<string> {
+    const url = `${this.BASE_URL}/update-admin-prof/${id}`;
+    return this.http.put(url, profileDto, { responseType: 'text' }).pipe(
+      tap((response) => console.log('Update Response:', response)),
+      catchError((error) => {
+        console.error('Update Error:', error);
+        return throwError(() => new Error('Failed to update profile.'));
+      })
+    );
   }
 
   getProfileImage(id: any): Observable<string> {

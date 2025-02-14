@@ -3,8 +3,7 @@ import { ChangePasswordModelComponent } from '../../components/change-password-m
 import { EditImageProfileModelComponent } from '../../edit-image-profile-model/edit-image-profile-model.component';
 import { AdminProfileModelComponent } from '../../components/admin-profile-model/admin-profile-model.component';
 import { MatDialog } from '@angular/material/dialog';
-import { AdminService } from '../../services/admin.service';
-import { AdminRespDto, ManagerProfileDto } from '../../model';
+import { ManagerProfileDto } from '../../model';
 import { CommonModule } from '@angular/common';
 import { ManagerService } from '../../services/manager.service';
 
@@ -30,27 +29,33 @@ export class ManagerProfileComponent {
   };
   
   
-  constructor(private dialog: MatDialog, private adminService: AdminService,
+  constructor(private dialog: MatDialog, 
       private managerService:ManagerService
-    ) {}
-  
+  ) { }
+ 
+    isLoading: boolean = true; // Track loading state
+    
     ngOnInit(): void {
       this.getProfileImage();
       this.getManagerProfile();
     }
     
     id = localStorage.getItem('id');
-  
+    
     getProfileImage() {
+      this.isLoading = true; // Show loader before fetching
       this.managerService.getProfileImage(this.id).subscribe({
-        next:(base64Image) => {
-          this.imageUrl = `data:image/jpeg;base64,${base64Image}`;  
+        next: (base64Image) => {
+          this.imageUrl = `data:image/jpeg;base64,${base64Image}`;
+          this.isLoading = false; // Hide loader after fetching
         },
-        error:(error) => {
-          console.error('Error fetching image:', error);  
+        error: (error) => {
+          console.error('Error fetching image:', error);
+          this.isLoading = false; // Hide loader even on error
         }
       });
     }
+    
   
     getManagerProfile() {
       this.managerService.managerProf(this.id).subscribe({

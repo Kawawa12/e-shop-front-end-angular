@@ -17,9 +17,15 @@
     <button (click)="addAdmin('2000ms','1000ms')" class="bg-blue-500 text-white p-4 rounded shadow-md hover:bg-blue-600 transition duration-300 flex items-center justify-center">
       <i class="fas fa-user-plus text-xl mr-2"></i> Add Admin
     </button>
-    <button class="bg-green-500 text-white p-4 rounded shadow-md hover:bg-green-600 transition duration-300 flex items-center justify-center">
-      <i class="fas fa-shopping-cart text-xl mr-2"></i> View Orders
-    </button>
+   
+      <button
+        class="px-6 py-3 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition"
+        (click)="openDatePickerDialog('1000ms','500ms')"
+      >
+        Choose Date to View Sales
+      </button>
+     
+    
     <button (click)="viewDailySales('2000ms', '1000ms') "  class="bg-purple-500 text-white p-4 rounded shadow-md hover:bg-purple-600 transition duration-300 flex items-center justify-center">
       <i class="fas fa-chart-line text-xl mr-2"></i> View Day Sales Report
     </button>
@@ -45,7 +51,7 @@
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
         </svg>
-        <p class="text-2xl font-bold text-gray-900">500</p>
+        <p class="text-2xl font-bold text-gray-900">{{ totalProductInStore }}</p>
       </div>
       <!-- Progress Cylinder -->
       <div class="mt-4 h-2 w-full bg-gray-200 rounded-full">
@@ -66,7 +72,7 @@
       <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
       </svg>
-      <p class="text-2xl font-bold text-gray-900">500</p>
+      <p class="text-2xl font-bold text-gray-900">{{ totalCustomers }}</p>
     </div>
    
   </div>
@@ -83,7 +89,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
           </svg>
-          <p class="text-2xl font-bold text-gray-900">2</p>
+          <p class="text-2xl font-bold text-gray-900"> {{ totalActiveAdmins }}</p>
         </div>
       </div>
   
@@ -91,14 +97,14 @@
         
        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 w-full sm:w-[48%] md:w-[23%] border-l-4 border-purple-500">
         <div class="flex justify-between">
-            <h2 class="text-lg font-semibold text-gray-700 font-mono">Total Customers</h2>
+            <h2 class="text-lg font-semibold text-gray-700 font-mono">New Orders</h2>
             <button class="bg-blue-500 text-white rounded-full px-2 py-2">View</button>
           </div>
           <div class="mt-2 text-green-500 flex justify-start space-x-10 items-center">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
             </svg>
-            <p class="text-2xl font-bold text-gray-900">500</p>
+            <p class="text-2xl font-bold text-gray-900">{{ totalNewOrders }}</p>
           </div>
           <!-- Progress Cylinder -->
           <div class="mt-4 h-2 w-full bg-gray-200 rounded-full">
@@ -121,7 +127,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
             </svg>
-            <p class="text-2xl font-bold text-gray-900">500</p>
+            <p class="text-2xl font-bold text-gray-900">{{ totalCategories }}</p>
           </div>
           <!-- Progress Cylinder -->
           <div class="mt-4 h-2 w-full bg-gray-200 rounded-full">
@@ -132,8 +138,8 @@
   
     <!-- Followed Card (Important for Admin Dashboard) -->
     <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 w-full sm:w-[48%] md:w-[23%] border-l-4 border-purple-500">
-      <h2 class="text-lg font-semibold text-gray-700">Pending Tasks</h2>
-      <p class="text-2xl font-bold text-gray-900">15</p>
+      <h2 class="text-lg font-semibold text-gray-700">Confirmed Orders</h2>
+      <p class="text-2xl font-bold text-gray-900">{{ totalConfirmedOrders }}</p>
       <div class="mt-2 text-purple-500">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
@@ -144,7 +150,7 @@
     <!-- Canceled Orders Card -->
     <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 w-full sm:w-[48%] md:w-[23%] border-l-4 border-red-500">
       <h2 class="text-lg font-semibold text-gray-700">Canceled Orders</h2>
-      <p class="text-2xl font-bold text-gray-900">10</p>
+      <p class="text-2xl font-bold text-gray-900">{{ totalCanceledOrders }}</p>
       <div class="mt-2 text-red-500">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -155,7 +161,7 @@
     <!-- Completed Orders Card -->
     <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 w-full sm:w-[48%] md:w-[23%] border-l-4 border-green-500">
       <h2 class="text-lg font-semibold text-gray-700">Completed Orders</h2>
-      <p class="text-2xl font-bold text-gray-900">200</p>
+      <p class="text-2xl font-bold text-gray-900">{{ totalCompletedOrders }}</p>
       <div class="mt-2 text-green-500">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />

@@ -33,7 +33,8 @@ export class AuthService {
     this.router.navigate(['/place-order']);
   }
 
-  goToLoginPage(){
+  goToLoginPage() {
+    localStorage.clear();
     this.router.navigate(['/sign-in']);
   }
 

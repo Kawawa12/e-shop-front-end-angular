@@ -1,0 +1,44 @@
+<div class="p-6 bg-white rounded-lg shadow-lg w-full">
+    <h2 class="text-xl font-semibold text-center mb-4">Sales Record for {{ salesData?.saleDate || selectedDate }}</h2>  
+  
+    <div *ngIf="salesData; else noData">
+      <!-- Table container with y-overflow -->
+      <div class="overflow-y-auto max-h-96"> <!-- Adjust max-h-96 to your preferred max height -->
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left lg:text-xl sm:text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
+              <th class="px-6 py-3 text-left lg:text-xl sm:text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
+              <th class="px-6 py-3 text-left lg:text-xl sm:text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+              <th class="px-6 py-3 text-left lg:text-xl sm:text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let sale of salesData.productNames; let i = index">
+              <td class="px-6 py-4 whitespace-nowrap md:text-xl lg:text-xl text-gray-900">{{ sale }}</td>
+              <td class="px-6 py-4 whitespace-nowrap md:text-xl lg:text-xl text-gray-900">{{ salesData.quantities[i] }}</td>
+              <td class="px-6 py-4 whitespace-nowrap md:text-xl lg:text-xl text-gray-900">{{ salesData.prices[i]}} /=</td>
+              <td class="px-6 py-4 whitespace-nowrap md:text-xl lg:text-xl text-gray-900">{{ salesData.quantities[i] * salesData.prices[i]}} /=</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+      <div class="mt-4 text-right">
+        <strong class="lg:text-2xl md:text-xl sm:text-lg">Total Amount:</strong> <span class="text-lg font-semibold">{{ salesData.totalAmount}} /=</span>
+      </div>
+    </div>
+  
+    <ng-template #noData>
+       <p class="text-red-500 text-center" *ngIf="errorMessage">{{ errorMessage }}</p> <!-- Show the error message -->
+    </ng-template>
+  
+    <div class="flex justify-end mt-4">
+      <button
+        class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition"
+        (click)="closeDialog()"
+      >
+        Close
+      </button>
+    </div>
+</div>
